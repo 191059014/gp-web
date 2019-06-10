@@ -14,7 +14,7 @@ import '@/util/global.js';
  * axios相关设置
  */
 axios.defaults.headers.post['Content-Type'] = 'application/json'
-axios.defaults.headers.common['Authorization'] = getCookie('LoginUser')
+axios.defaults.headers.common['Authorization'] = getCookie(USER_SESSION_KEY)
 axios.defaults.withCredentials = true// 让ajax携带cookie
 Vue.prototype.$axios = axios
 
