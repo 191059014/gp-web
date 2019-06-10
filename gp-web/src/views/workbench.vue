@@ -13,14 +13,13 @@
       </el-col>
       <el-col :span="4" class="userinfo">
         <el-dropdown trigger="hover">
-          <span class="el-dropdown-link userinfo-inner">
-            <img :src="this.sysUserAvatar">
-            {{sysUserName}}
-          </span>
+          <span class="el-dropdown-link userinfo-inner">黄彪</span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>我的消息</el-dropdown-item>
-            <el-dropdown-item>设置</el-dropdown-item>
-            <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-edit">修改密码</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-minus">余额提取</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-user-solid">实名认证</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-bank-card">绑定银行卡</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-switch-button" divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
@@ -30,7 +29,7 @@
         <!--导航菜单-->
         <el-menu
           :default-active="$route.path"
-          class="el-menu-vertical-demo"
+          class="el-menu-vertical"
           @open="handleopen"
           @close="handleclose"
           @select="handleselect"
@@ -58,7 +57,7 @@
           </template>
         </el-menu>
         <!--导航菜单-折叠后-->
-        <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
+        <ul class="el-menu el-menu-vertical collapsed" v-show="collapsed" ref="menuCollapsed">
           <li
             v-for="(item,index) in $router.options.routes"
             v-if="!item.hidden"
@@ -189,11 +188,67 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0;
+}
+.container {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  width: 100%;
+}
 .container > .header {
   height: 60px;
   line-height: 60px;
-  background: #20A0FF;
+  background: #20a0ff;
   color: #fff;
+}
+.container > .header > .userinfo {
+  text-align: right;
+  padding-right: 35px;
+  float: right;
+}
+.container > .header > .userinfo > .el-dropdown > .userinfo-inner {
+  cursor: pointer;
+  color: #fff;
+}
+/* .container > .header > .userinfo > .userinfo-inner > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  margin: 10px 0px 10px 10px;
+  float: right;
+} */
+.container > .header > .logo {
+  height: 60px;
+  font-size: 22px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-color: rgba(238, 241, 146, 0.3);
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+
+.container > .header > .logo > img {
+  width: 40px;
+  float: left;
+  margin: 10px 10px 10px 18px;
+}
+.container > .header > .logo > .txt {
+  color: #fff;
+}
+.container > .header > .logo-width {
+  width: 230px;
+}
+.container > .header > .logo-collapse-width {
+  width: 60px;
+}
+div.tools {
+  padding: 0px 23px;
+  width: 14px;
+  height: 60px;
+  line-height: 60px;
+  cursor: pointer;
 }
 .container > .main {
   display: flex;
@@ -202,9 +257,27 @@ export default {
   bottom: 0px;
   overflow: hidden;
 }
-.container > .main > .aside {
+.container > .main > aside {
   flex: 0 0 230px;
   width: 230px;
+}
+.container > .main > aside > .el-menu {
+  height: 100%;
+}
+.container > .main > aside > .collapsed {
+  width: 60px;
+}
+.container > .main > aside > .collapsed > .item {
+  position: relative;
+}
+
+.container > .main > aside > .collapsed > .el-submenu {
+  position: absolute;
+  top: 0px;
+  left: 60px;
+  z-index: 99999;
+  height: auto;
+  display: none;
 }
 .container > .main > .menu-collapsed {
   flex: 0 0 60px;
@@ -215,90 +288,31 @@ export default {
   width: 230px;
 }
 
+.container > .main > .menu-expanded > .el-menu-vertical {
+  width: 230px !important;
+}
+
 .container > .main > .content-container {
   flex: 1;
-  overflow-y: scroll;
   padding: 20px;
 }
-.container > .main > .content-container > .content-wrapper {
-  background-color: #fff;
-  box-sizing: border-box;
-}
+
 .container > .main > .content-container > .breadcrumb-container > .title {
   width: 200px;
   float: left;
   color: #475669;
 }
+
 .breadcrumb-inner {
   float: right;
 }
-.container > .main > .aside > .el-menu {
-  height: 100%;
+
+.container > .main > .content-container > .content-wrapper {
+  background-color: #fff;
+  box-sizing: border-box;
 }
-.container > .main > .aside > .collapsed {
-  width: 60px;
-}
-.container > .main > .aside > .collapsed > .item {
-  position: relative;
-}
-.container > .main > .aside > .collapsed > .submenu {
-  position: absolute;
-  top: 0px;
-  left: 60px;
-  z-index: 99999;
-  height: auto;
-  display: none;
-}
-.container > .header > .userinfo {
-  text-align: right;
-  padding-right: 35px;
-  float: right;
-}
-.container > .header > .logo-width {
-  width: 230px;
-}
-.container > .header > .logo-collapse-width {
-  width: 60px;
-}
-.tools {
-  padding: 0px 23px;
-  width: 14px;
-  height: 60px;
-  line-height: 60px;
-  cursor: pointer;
-}
-.container > .header > .logo {
-  height: 60px;
-  font-size: 22px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-color: rgba(238, 241, 146, 0.3);
-  border-right-width: 1px;
-  border-right-style: solid;
-}
-.container > .header > .logo > .img {
-  width: 40px;
-  float: left;
-  margin: 10px 10px 10px 18px;
-}
-.container > .header > .logo > .txt {
-  color: #fff;
-}
-.container > .header > .userinfo > .userinfo-inner {
-  cursor: pointer;
-  color: #fff;
-}
-.container > .header > .userinfo > .userinfo-inner > img {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  margin: 10px 0px 10px 10px;
-  float: right;
-}
-.container {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  width: 100%;
+
+.el-dropdown-menu {
+  margin-top: 0 !important;
 }
 </style>

@@ -7,6 +7,8 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import {getCookie} from '@/util/cookieUtils.js'
+import 'font-awesome/css/font-awesome.min.css'
+import '@/util/global.js';
 
 /**
  * axios相关设置

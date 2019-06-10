@@ -8,11 +8,11 @@
     class="login-container"
   >
     <h3 class="title">系统登录</h3>
-    <el-form-item prop="account">
+    <el-form-item prop="agentName">
       <el-input type="text" v-model="AgentDO.agentName" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
-    <el-form-item prop="checkPass">
-      <el-input type="password" v-model="AgentDO.password" auto-complete="off" placeholder="密码"></el-input>
+    <el-form-item prop="password">
+      <el-input type="password" v-model="AgentDO.password" auto-complete="off" placeholder="密码" show-password></el-input>
     </el-form-item>
     <el-form-item style="width:100%;padding-top:20px;">
       <el-button
@@ -27,17 +27,18 @@
 </template>
 
 <script>
+import { login } from '../api/system';
 export default {
   data() {
     return {
       logining: false,
       AgentDO: {
-        agentName: "admin",
-        password: "123456"
+        agentName: "",
+        password: ""
       },
       loginRules: {
-        account: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        checkPass: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        agentName: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
       checked: true
     };
@@ -47,18 +48,18 @@ export default {
       this.$refs.AgentDO.resetFields();
     },
     handleSubmit(ev) {
-      var _this = this;
+      debugger;
       this.$refs.AgentDO.validate(valid => {
         if (valid) {
           this.logining = true;
           var loginParams = {
-            username: this.AgentDO.agentName,
+            agentName: this.AgentDO.agentName,
             password: this.AgentDO.password
           };
-          requestLogin(loginParams).then(data => {
+          login(loginParams).then(data => {
             this.logining = false;
-            let { msg, code, user } = data;
-            if (code !== 200) {
+            let { msg, code} = data;
+            if (code !== responseCode.SUCCESS.code) {
               this.$message({
                 message: msg,
                 type: "error"
