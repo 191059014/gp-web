@@ -1,191 +1,181 @@
-// import util from '../../common/js/util'
-// //import NProgress from 'nprogress'
-// import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
+import { getAgentListPage, addAgent, modifyAgent, deleteAgentById } from '../../api/system';
 
 export default {
-    data() {
-      return {
-        filters: {
-          name: ""
-        },
-        users: [],
-        total: 0,
-        page: 1,
-        listLoading: false,
-        sels: [], //列表选中列
-  
-        editFormVisible: false, //编辑界面是否显示
-        editLoading: false,
-        editFormRules: {
-          name: [{ required: true, message: "请输入姓名", trigger: "blur" }]
-        },
-        //编辑界面数据
-        editForm: {
-          id: 0,
-          name: "",
-          sex: -1,
-          age: 0,
-          birth: "",
-          addr: ""
-        },
-  
-        addFormVisible: false, //新增界面是否显示
-        addLoading: false,
-        addFormRules: {
-          name: [{ required: true, message: "请输入姓名", trigger: "blur" }]
-        },
-        //新增界面数据
-        addForm: {
-          name: "",
-          sex: -1,
-          age: 0,
-          birth: "",
-          addr: ""
-        }
-      };
+  data() {
+    return {
+      filters: {
+        agentName: ""
+      },
+      users: [],
+      total: 0,
+      pageNum: 1,
+      pageSize: 10,
+      listLoading: false,
+      sels: [], //列表选中列
+
+      editFormVisible: false, //编辑界面是否显示
+      editLoading: false,
+      editFormLabelWidth: '120px',
+      editFormRules: {
+        agentName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+      },
+      //编辑界面数据
+      editForm: {
+        agentId: "",
+        agentName: "",
+        agentName: "",
+      },
+
+      addFormVisible: false, //新增界面是否显示
+      addLoading: false,
+      addFormLabelWidth: '120px',
+      addFormRules: {
+        agentName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        confirmPassword: [{ required: true, message: "请输入确认密码", trigger: "blur" }]
+      },
+      //新增界面数据
+      addForm: {
+        agentName: "",
+        agentName: "",
+        confirmPassword: ""
+      }
+    };
+  },
+  methods: {
+    //性别显示转换
+    formatSex: function (row, column) {
+      return row.sex == 1 ? "男" : row.sex == 0 ? "女" : "未知";
     },
-    methods: {
-      //性别显示转换
-      formatSex: function(row, column) {
-        return row.sex == 1 ? "男" : row.sex == 0 ? "女" : "未知";
-      },
-      handleCurrentChange(val) {
-        this.page = val;
-        this.getUsers();
-      },
-      //获取用户列表
-      getUsers() {
-        let para = {
-          page: this.page,
-          name: this.filters.name
-        };
-        this.listLoading = true;
-        //NProgress.start();
-        // getUserListPage(para).then((res) => {
-        // 	this.total = res.data.total;
-        // 	this.users = res.data.users;
-        // 	this.listLoading = false;
-        // 	//NProgress.done();
-        // });
-      },
-      //删除
-      handleDel: function(index, row) {
-        this.$confirm("确认删除该记录吗?", "提示", {
-          type: "warning"
-        })
-          .then(() => {
-            this.listLoading = true;
-            //NProgress.start();
-            let para = { id: row.id };
-            // removeUser(para).then((res) => {
-            // 	this.listLoading = false;
-            // 	//NProgress.done();
-            // 	this.$message({
-            // 		message: '删除成功',
-            // 		type: 'success'
-            // 	});
-            // 	this.getUsers();
-            // });
-          })
-          .catch(() => {});
-      },
-      //显示编辑界面
-      handleEdit: function(index, row) {
-        this.editFormVisible = true;
-        this.editForm = Object.assign({}, row);
-      },
-      //显示新增界面
-      handleAdd: function() {
-        this.addFormVisible = true;
-        this.addForm = {
-          name: "",
-          sex: -1,
-          age: 0,
-          birth: "",
-          addr: ""
-        };
-      },
-      //编辑
-      editSubmit: function() {
-        this.$refs.editForm.validate(valid => {
-          if (valid) {
-            this.$confirm("确认提交吗？", "提示", {}).then(() => {
-              this.editLoading = true;
-              //NProgress.start();
-              let para = Object.assign({}, this.editForm);
-              para.birth =
-                !para.birth || para.birth == ""
-                  ? ""
-                  : util.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
-              // editUser(para).then((res) => {
-              // 	this.editLoading = false;
-              // 	//NProgress.done();
-              // 	this.$message({
-              // 		message: '提交成功',
-              // 		type: 'success'
-              // 	});
-              // 	this.$refs['editForm'].resetFields();
-              // 	this.editFormVisible = false;
-              // 	this.getUsers();
-              // });
-            });
-          }
-        });
-      },
-      //新增
-      addSubmit: function() {
-        this.$refs.addForm.validate(valid => {
-          if (valid) {
-            this.$confirm("确认提交吗？", "提示", {}).then(() => {
-              this.addLoading = true;
-              //NProgress.start();
-              let para = Object.assign({}, this.addForm);
-              para.birth =
-                !para.birth || para.birth == ""
-                  ? ""
-                  : util.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
-              // addUser(para).then((res) => {
-              // 	this.addLoading = false;
-              // 	//NProgress.done();
-              // 	this.$message({
-              // 		message: '提交成功',
-              // 		type: 'success'
-              // 	});
-              // 	this.$refs['addForm'].resetFields();
-              // 	this.addFormVisible = false;
-              // 	this.getUsers();
-              // });
-            });
-          }
-        });
-      },
-      selsChange: function(sels) {
-        this.sels = sels;
-      },
-      //批量删除
-      batchRemove: function() {
-        var ids = this.sels.map(item => item.id).toString();
-        this.$confirm("确认删除选中记录吗？", "提示", {
-          type: "warning"
-        })
-          .then(() => {
-            this.listLoading = true;
-            //NProgress.start();
-            let para = { ids: ids };
-            // batchRemoveUser(para).then((res) => {
-            // 	this.listLoading = false;
-            // 	//NProgress.done();
-            // 	this.$message({
-            // 		message: '删除成功',
-            // 		type: 'success'
-            // 	});
-            // 	this.getUsers();
-            // });
-          })
-          .catch(() => {});
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getUsers();
+    },
+    handleCurrentChange(val) {
+      this.pageNum = val;
+      this.getUsers();
+    },
+    //获取用户列表
+    getUsers() {
+      let bodyParam = {
+        agentName: this.filters.agentName
+      };
+      this.listLoading = true;
+      getAgentListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
+        if (res.code == ResponseEnum.SUCCESS.code) {
+          this.total = res.total;
+          this.users = res.obj;
+          this.listLoading = false;
+        } else {
+          this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+        }
+      }).catch(err => {
+        this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+      });
+    },
+    handleReset: function () {
+      this.filters = {
+        agentName: ""
       }
     },
-    mounted() {
-      this.getUsers();
+    //删除
+    handleDel: function (index, row) {
+      this.$confirm("确认删除该记录吗?", "提示", {
+        type: "warning"
+      })
+        .then(() => {
+          this.listLoading = true;
+          let agentId = row.agentId;
+          deleteAgentById(agentId).then((res) => {
+            if (res.code == ResponseEnum.SUCCESS.code) {
+              this.listLoading = false;
+              this.$message({ message: '删除成功', type: 'success' });
+              this.getUsers();
+            } else {
+              this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+            }
+          });
+        }).catch(err => {
+          this.listLoading = false;
+          this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+        });
+    },
+    //显示编辑界面
+    handleEdit: function (index, row) {
+      this.editFormVisible = true;
+      this.editForm = Object.assign({}, row);
+    },
+    //显示新增界面
+    handleAdd: function () {
+      this.addFormVisible = true;
+      this.addForm = {
+        agentName: "",
+        agentName: "",
+        confirmPassword: ""
+      }
+    },
+    //编辑
+    editSubmit: function () {
+      this.$refs.editForm.validate(valid => {
+        if (valid) {
+          this.editLoading = true;
+          let bodyParam = Object.assign({}, this.editForm);
+          modifyAgent(bodyParam).then((res) => {
+            if (res.code == ResponseEnum.SUCCESS.code) {
+              this.editLoading = false;
+              this.$message({ message: '修改成功', type: 'success' });
+              this.$refs['editForm'].resetFields();
+              this.editFormVisible = false;
+              this.getUsers();
+            } else {
+              this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+            }
+          }).catch(err => {
+            this.editLoading = false;
+            this.editFormVisible = false;
+            this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+          });
+        }
+      });
+    },
+    //新增
+    addSubmit: function () {
+      this.$refs.addForm.validate(valid => {
+        if (valid) {
+          this.addLoading = true;
+          let bodyParam = Object.assign({}, this.addForm);
+          delete bodyParam.confirmPassword;
+          addAgent(bodyParam).then((res) => {
+            if (res.code == ResponseEnum.SUCCESS.code) {
+              this.addLoading = false;
+              this.$message({ message: '添加成功', type: 'success' });
+              this.$refs['addForm'].resetFields();
+              this.addFormVisible = false;
+              this.getUsers();
+            } else {
+              this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+            }
+          }).catch(err => {
+            this.addLoading = false;
+            this.addFormVisible = false;
+            this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+          });
+        }
+      });
+    },
+    selsChange: function (sels) {
+      this.sels = sels;
+    },
+    //批量删除
+    batchRemove: function () {
+      var ids = this.sels.map(item => item.id).toString();
+      this.$confirm("确认删除选中记录吗？", "提示", { type: "warning" })
+        .then(() => { })
+        .catch(() => { });
     }
-  };
+  },
+  mounted() {
+    this.getUsers();
+  }
+};

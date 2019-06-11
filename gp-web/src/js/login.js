@@ -27,21 +27,23 @@ export default {
             agentName: this.AgentDO.agentName,
             password: this.AgentDO.password
           };
-          login(loginParams).then(data => {
-            this.logining = false;
-            let { msg, code} = data;
-            if (code !== responseCode.SUCCESS.code) {
-              this.$message({
-                message: msg,
-                type: "error"
-              });
-            } else {
-              sessionStorage.setItem("user", JSON.stringify(user));
-              this.$router.push({ path: "/table" });
-            }
-          });
+          login(loginParams)
+            .then(data => {
+              this.logining = false;
+              let { msg, code } = data;
+              if (code == ResponseEnum.LOGIN_SUCCESS.code) {
+                this.$message({ message: msg, type: "info" });
+                sessionStorage.setItem(USER_SESSION_KEY, JSON.stringify(data.obj));
+                this.$router.push({ path: "/workbench" });
+              } else {
+                this.$message({ message: msg, type: "error" });
+              }
+            })
+            .catch(err => {
+              this.$message({ message: ResponseEnum.ERROR.msg, type: "error" });
+            });
         } else {
-          console.log("error submit!!");
+          console.log("validate failed!");
           return false;
         }
       });
