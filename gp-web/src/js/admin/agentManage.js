@@ -44,10 +44,6 @@ export default {
     };
   },
   methods: {
-    //性别显示转换
-    formatSex: function (row, column) {
-      return row.sex == 1 ? "男" : row.sex == 0 ? "女" : "未知";
-    },
     handleSizeChange(val) {
       this.pageSize = val;
       this.getUsers();

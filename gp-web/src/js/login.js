@@ -1,4 +1,5 @@
 import { login } from '../api/system';
+import { setCookie } from '../util/cookieUtils.js'
 export default {
   data() {
     return {
@@ -19,7 +20,6 @@ export default {
       this.$refs.AgentDO.resetFields();
     },
     handleSubmit(ev) {
-      debugger;
       this.$refs.AgentDO.validate(valid => {
         if (valid) {
           this.logining = true;
@@ -33,13 +33,15 @@ export default {
               let { msg, code } = data;
               if (code == ResponseEnum.LOGIN_SUCCESS.code) {
                 this.$message({ message: msg, type: "info" });
-                sessionStorage.setItem(USER_SESSION_KEY, JSON.stringify(data.obj));
+                // 将登陆信息放入缓存
+                setCookie(USER_SESSION_KEY, JSON.stringify(data.obj), USER_SESSION_EXIRE_TIME);
                 this.$router.push({ path: "/workbench" });
               } else {
                 this.$message({ message: msg, type: "error" });
               }
             })
             .catch(err => {
+              this.logining = false;
               this.$message({ message: ResponseEnum.ERROR.msg, type: "error" });
             });
         } else {

@@ -8,7 +8,7 @@ export function setCookie(key, value, expire) {
     var date = new Date()
     date.setSeconds(date.getSeconds() + expire)
     document.cookie = key + "=" + escape(value) + "; expires=" + date.toGMTString()
-    //console.log(document.cookie)
+    console.log(document.cookie)
 }
 
 /**

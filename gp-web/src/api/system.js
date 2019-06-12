@@ -12,3 +12,13 @@ export const addAgent = params => { return axios.post(`${baseUrl}/controller/age
 export const modifyAgent = params => { return axios.post(`${baseUrl}/controller/agent/modifyAgent`, params).then(res => res.data); };
 // 删除用户
 export const deleteAgentById = agentId => { return axios.get(`${baseUrl}/controller/agent/deleteAgentById?agentId=` + agentId).then(res => res.data); };
+
+/**
+ * 线下支付
+ */
+// 支付状态下拉框
+export const getOfflinePayStatusCombobox = () => { return axios.get(`${baseUrl}/controller/offlinePay/getOfflinePayStatusCombobox`).then(res => res.data); };
+// 支付类型下拉框
+export const getOfflinePayTypeCombobox = () => { return axios.get(`${baseUrl}/controller/offlinePay/getOfflinePayTypeCombobox`).then(res => res.data); };
+// 分页查询线下支付列表
+export const getOfflinePayListPage = (pageNum, pageSize, bodyParam) => { return axios.post(`${baseUrl}/controller/offlinePay/getOfflinePayListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
