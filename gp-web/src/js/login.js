@@ -1,5 +1,4 @@
 import { login } from '../api/system';
-import { setCookie } from '../util/cookieUtils.js'
 export default {
   data() {
     return {
@@ -31,18 +30,17 @@ export default {
             .then(data => {
               this.logining = false;
               let { msg, code } = data;
+              debugger;
               if (code == ResponseEnum.LOGIN_SUCCESS.code) {
-                this.$message({ message: msg, type: "info" });
                 // 将登陆信息放入缓存
-                setCookie(USER_SESSION_KEY, JSON.stringify(data.obj), USER_SESSION_EXIRE_TIME);
+                this.$store.commit('setLoginInfo', data.obj.agentId, data.obj.agentName, data.obj.password);
                 this.$router.push({ path: "/workbench" });
+                this.$message({ message: msg, type: "success" });
               } else {
                 this.$message({ message: msg, type: "error" });
               }
-            })
-            .catch(err => {
+            }).catch(err => {
               this.logining = false;
-              this.$message({ message: ResponseEnum.ERROR.msg, type: "error" });
             });
         } else {
           console.log("validate failed!");

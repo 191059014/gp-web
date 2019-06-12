@@ -69,7 +69,6 @@ export default {
                     this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
                 }
             }).catch(err => {
-                this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
             });
         }
     },

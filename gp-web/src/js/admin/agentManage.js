@@ -67,7 +67,6 @@ export default {
           this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
         }
       }).catch(err => {
-        this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
       });
     },
     handleReset: function () {
@@ -94,7 +93,6 @@ export default {
           });
         }).catch(err => {
           this.listLoading = false;
-          this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
         });
     },
     //显示编辑界面
@@ -130,7 +128,6 @@ export default {
           }).catch(err => {
             this.editLoading = false;
             this.editFormVisible = false;
-            this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
           });
         }
       });
@@ -155,7 +152,6 @@ export default {
           }).catch(err => {
             this.addLoading = false;
             this.addFormVisible = false;
-            this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
           });
         }
       });
