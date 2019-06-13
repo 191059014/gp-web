@@ -6,22 +6,22 @@
         <el-form-item>
           <el-select v-model="filters.payStatus" placeholder="请选择支付状态">
             <el-option
-            v-for="item in payStatusList"
-            :key="item.value"
-            :label="item.name"
-            :value="item.value">
-            </el-option>
-        </el-select>
+              v-for="item in payStatusList"
+              :key="item.value"
+              :label="item.name"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-select v-model="filters.payType" placeholder="请选择支付类型">
             <el-option
-            v-for="item in payTypeList"
-            :key="item.value"
-            :label="item.name"
-            :value="item.value">
-            </el-option>
-        </el-select>
+              v-for="item in payTypeList"
+              :key="item.value"
+              :label="item.name"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="queryList">查询</el-button>
@@ -49,11 +49,12 @@
       <el-table-column prop="bankNo" label="银行卡" style="width:15%"></el-table-column>
       <el-table-column prop="remark" label="备注" style="width:10%"></el-table-column>
       <el-table-column prop="systemRemark" label="管理员备注" style="width:10%"></el-table-column>
-      <el-table-column label="操作" style="width:20%">#
+      <el-table-column label="操作" style="width:20%">
+        #
         <!-- <template scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
-        </template> -->
+        </template>-->
       </el-table-column>
     </el-table>
 

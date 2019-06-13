@@ -7,7 +7,7 @@ import permissionManage from '@/views/admin/permissionManage'
 import offlinePay from '@/views/auditManage/offlinePay'
 import agent from '@/views/agentManage/agent'
 import agentFund from '@/views/agentManage/agentFund'
-import agentFundSerial from '@/views/agentManage/agentFundSerial'
+import agentFundDetail from '@/views/agentManage/agentFundDetail'
 import customer from '@/views/customerManage/customer'
 import customerFund from '@/views/customerManage/customerFund'
 import customerFundSerial from '@/views/customerManage/customerFundSerial'
@@ -58,7 +58,7 @@ export const constantRouterMap = [
     children: [
       { path: '/agent', component: agent, name: '代理商管理' },
       { path: '/agentFund', component: agentFund, name: '代理商资金管理' },
-      { path: '/agentFundSerial', component: agentFundSerial, name: '代理商资金流水' }
+      { path: '/agentFundDetail', component: agentFundDetail, name: '代理商资金流水' }
     ]
   }, {
     path: '/',
