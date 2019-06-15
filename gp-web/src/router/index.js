@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import workbench from '@/views/workbench'
-import agentManage from '@/views/admin/agentManage'
+import userManage from '@/views/admin/userManage'
 import roleManage from '@/views/admin/roleManage'
 import permissionManage from '@/views/admin/permissionManage'
 import offlinePay from '@/views/auditManage/offlinePay'
@@ -38,7 +38,7 @@ export const constantRouterMap = [
     name: '系统管理',
     iconCls: 'el-icon-setting',
     children: [
-      { path: '/agentManage', component: agentManage, name: '用户管理' },
+      { path: '/userManage', component: userManage, name: '用户管理' },
       { path: '/roleManage', component: roleManage, name: '角色管理' },
       { path: '/permissionManage', component: permissionManage, name: '权限管理' }
     ]

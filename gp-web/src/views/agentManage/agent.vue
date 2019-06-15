@@ -4,7 +4,7 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.agentName" placeholder="姓名"></el-input>
+          <el-input v-model="filters.userName" placeholder="姓名"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -20,8 +20,8 @@
 
     <!--列表-->
     <el-table :data="users" highlight-current-row v-loading="listLoading" style="width: 100%;">
-      <el-table-column prop="agentName" label="代理商名称" style="width:8%"></el-table-column>
-      <el-table-column prop="agentType" label="代理商类型" style="width:8%" :formatter="formatAgentType"></el-table-column>
+      <el-table-column prop="userName" label="代理商名称" style="width:8%"></el-table-column>
+      <el-table-column prop="agentLevel" label="代理商类型" style="width:8%" :formatter="formatAgentLevel"></el-table-column>
       <el-table-column prop="bankName" label="银行名称" style="width:8%"></el-table-column>
       <el-table-column prop="bankNo" label="银行卡号" style="width:10%"></el-table-column>
       <el-table-column prop="idCardNo" label="身份证号" style="width:15%"></el-table-column>

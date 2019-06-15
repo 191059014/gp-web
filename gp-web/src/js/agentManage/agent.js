@@ -1,10 +1,10 @@
-import { getAgentListPage, addAgent, modifyAgent, deleteAgentById, getAgentTypeCombobox, getRealAuthStatusCombobox } from '../../api/system';
+import { getUserListPage, addUser, updateUser, deleteUserById, getAgentLevelCombobox, getRealAuthStatusCombobox } from '../../api/system';
 
 export default {
     data() {
         return {
             filters: {
-                agentName: ""
+                userName: ""
             },
             users: [],
             total: 0,
@@ -17,12 +17,12 @@ export default {
             editLoading: false,
             editFormLabelWidth: '120px',
             editFormRules: {
-                agentName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+                userName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
                 password: [{ required: true, message: "请输入密码", trigger: "blur" }]
             },
             //编辑界面数据
             editForm: {
-                agentId: "",
+                userId: "",
                 inviteCode: "",
             },
 
@@ -30,24 +30,24 @@ export default {
             addLoading: false,
             addFormLabelWidth: '120px',
             addFormRules: {
-                agentName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+                userName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
                 password: [{ required: true, message: "请输入密码", trigger: "blur" }],
                 confirmPassword: [{ required: true, message: "请输入确认密码", trigger: "blur" }]
             },
             //新增界面数据
             addForm: {
-                agentName: "",
-                agentName: "",
+                userName: "",
+                password: "",
                 confirmPassword: ""
             },
-            agentTypeList: [],
+            agentLevelList: [],
             realAuthStatusList: []
         };
     },
     methods: {
-        getAgentTypeList() {
-            getAgentTypeCombobox().then(res => {
-                this.agentTypeList = res.obj;
+        getAgentLevelList() {
+            getAgentLevelCombobox().then(res => {
+                this.agentLevelList = res.obj;
             })
         },
         getRealAuthStatusList() {
@@ -55,7 +55,7 @@ export default {
                 this.realAuthStatusList = res.obj;
             })
         },
-        formatAgentType(row, column) {
+        formatAgentLevel(row, column) {
             for (let i in this.agentTypeList) {
                 if (row.agentType == this.agentTypeList[i].value) {
                     return this.agentTypeList[i].name;
@@ -82,10 +82,10 @@ export default {
         //获取用户列表
         getUsers() {
             let bodyParam = {
-                agentName: this.filters.agentName
+                userName: this.filters.userName
             };
             this.listLoading = true;
-            getAgentListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
+            getUserListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
                 if (res.code == ResponseEnum.SUCCESS.code) {
                     this.total = res.total;
                     this.users = res.obj;
@@ -98,7 +98,7 @@ export default {
         },
         handleReset: function () {
             this.filters = {
-                agentName: ""
+                userName: ""
             }
         },
         //删除
@@ -108,8 +108,8 @@ export default {
             })
                 .then(() => {
                     this.listLoading = true;
-                    let agentId = row.agentId;
-                    deleteAgentById(agentId).then((res) => {
+                    let userId = row.userId;
+                    deleteUserById(userId).then((res) => {
                         if (res.code == ResponseEnum.SUCCESS.code) {
                             this.listLoading = false;
                             this.$message({ message: '删除成功', type: 'success' });
@@ -131,8 +131,8 @@ export default {
         handleAdd: function () {
             this.addFormVisible = true;
             this.addForm = {
-                agentName: "",
-                agentName: "",
+                userName: "",
+                password: "",
                 confirmPassword: ""
             }
         },
@@ -142,7 +142,7 @@ export default {
                 if (valid) {
                     this.editLoading = true;
                     let bodyParam = Object.assign({}, this.editForm);
-                    modifyAgent(bodyParam).then((res) => {
+                    updateUser(bodyParam).then((res) => {
                         if (res.code == ResponseEnum.SUCCESS.code) {
                             this.editLoading = false;
                             this.$message({ message: '修改成功', type: 'success' });
@@ -166,7 +166,7 @@ export default {
                     this.addLoading = true;
                     let bodyParam = Object.assign({}, this.addForm);
                     delete bodyParam.confirmPassword;
-                    addAgent(bodyParam).then((res) => {
+                    addUser(bodyParam).then((res) => {
                         if (res.code == ResponseEnum.SUCCESS.code) {
                             this.addLoading = false;
                             this.$message({ message: '添加成功', type: 'success' });
@@ -189,7 +189,7 @@ export default {
     },
     mounted() {
         this.getUsers();
-        this.getAgentTypeList();
+        this.getAgentLevelList();
         this.getRealAuthStatusList();
     }
 };
