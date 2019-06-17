@@ -44,10 +44,7 @@ axios.interceptors.request.use(function (config) {
 });
 // 响应拦截（配置请求回来的信息）
 axios.interceptors.response.use(function (response) {
-    return response;
-}, function (error) {
-    debugger;
-    if (401 == error.response.status) {
+    if (response.data.code == ResponseEnum.NO_SESSION.code) {
         Message({ message: ResponseEnum.NO_SESSION.msg, type: "error" });
         router.replace({
             path: '/login',
@@ -55,6 +52,9 @@ axios.interceptors.response.use(function (response) {
         });
         return;
     }
+    return response;
+}, function (error) {
+    debugger;
     Message({ message: ResponseEnum.ERROR.msg, type: "error" });
     // 处理响应失败
     return Promise.reject(error);
