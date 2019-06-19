@@ -4,11 +4,11 @@ export default {
     return {
       logining: false,
       AgentDO: {
-        userName: "",
+        mobile: "",
         password: ""
       },
       loginRules: {
-        userName: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        mobile: [{ required: true, message: "请输入账号", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
       checked: true
@@ -23,7 +23,7 @@ export default {
         if (valid) {
           this.logining = true;
           var loginParams = {
-            userName: this.AgentDO.userName,
+            mobile: this.AgentDO.mobile,
             password: this.AgentDO.password
           };
           login(loginParams)
@@ -33,7 +33,8 @@ export default {
               debugger;
               if (code == ResponseEnum.LOGIN_SUCCESS.code) {
                 // 将登陆信息放入缓存
-                this.$store.commit('setLoginInfo', data.obj.userId, data.obj.agentName, data.obj.password);
+                sessionStorage.setItem(USER_SESSION_KEY_agentId, data.obj.agentId);
+                sessionStorage.setItem(USER_SESSION_KEY_agentName, data.obj.agentName);
                 this.$router.push({ path: "/workbench" });
                 this.$message({ message: msg, type: "success" });
               } else {

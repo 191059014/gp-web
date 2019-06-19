@@ -11,14 +11,15 @@ window.ResponseEnum = {
 };
 
 // 用户缓存key
-window.USER_SESSION_KEY = "LOGIN_USER_INFO_";
+window.USER_SESSION_KEY_agentId = "LOGIN_USER_INFO_agentId";
+window.USER_SESSION_KEY_agentName = "LOGIN_USER_INFO_agentName";
 // 用户缓存过期时间
 window.USER_SESSION_EXIRE_TIME = 600;
 
 router.beforeEach((to, from, next) => {
     debugger;
     if (to.path != '/login') {  // 非登陆页面
-        if (store.state.AgentDO.agentId) {  // 通过vuex state获取当前的agentId是否存在
+        if (sessionStorage.getItem(USER_SESSION_KEY_agentId)) {  // 通过vuex state获取当前的agentId是否存在
             next();
         } else {
             Message({ message: ResponseEnum.NO_SESSION.msg, type: "error" });
@@ -35,7 +36,7 @@ router.beforeEach((to, from, next) => {
 // 请求拦截（配置发送请求的信息）
 axios.interceptors.request.use(function (config) {
     // 处理请求之前的配置
-    config.headers.common.Authorization = store.state.AgentDO.agentId;
+    config.headers.common.Authorization = sessionStorage.getItem(USER_SESSION_KEY_agentId);
     return config;
 }, function (error) {
     // 请求失败的处理

@@ -1,46 +1,49 @@
-import { getUserListPage, addUser, updateUser, deleteUserById } from '../../api/system';
+import { getAgentListPage, addAgent, updateAgent, deleteAgentById } from '../../api/system';
 
 export default {
   data() {
     return {
       filters: {
-        userName: ""
+        agentName: "",
+        mobile: ""
       },
-      users: [],
+      agentList: [],
       total: 0,
       pageNum: 1,
       pageSize: 10,
       listLoading: false,
       sels: [], //列表选中列
+      primaryPassword: "",
 
       editFormVisible: false, //编辑界面是否显示
       editLoading: false,
       editFormLabelWidth: '120px',
       editFormRules: {
-        userName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        agentName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        mobile: [{ required: true, message: "请输入手机号", trigger: "blur" }]
       },
       //编辑界面数据
       editForm: {
-        userId: "",
-        userName: "",
+        agentId: "",
+        agentName: "",
         password: "",
+        mobile: ""
       },
 
       addFormVisible: false, //新增界面是否显示
       addLoading: false,
       addFormLabelWidth: '120px',
       addFormRules: {
-        userName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+        agentName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
         confirmPassword: [{ required: true, message: "请输入确认密码", trigger: "blur" }]
       },
       //新增界面数据
       addForm: {
-        userName: "",
+        agentName: "",
         password: "",
         confirmPassword: "",
-        inviteCode: "",
         mobile: ""
       }
     };
@@ -48,22 +51,23 @@ export default {
   methods: {
     handleSizeChange(val) {
       this.pageSize = val;
-      this.getUsers();
+      this.queryAgentListPage();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
-      this.getUsers();
+      this.queryAgentListPage();
     },
     //获取用户列表
-    getUsers() {
+    queryAgentListPage() {
       let bodyParam = {
-        userName: this.filters.userName
+        agentName: this.filters.agentName,
+        mobile: this.filters.mobile
       };
       this.listLoading = true;
-      getUserListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
+      getAgentListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
         if (res.code == ResponseEnum.SUCCESS.code) {
           this.total = res.total;
-          this.users = res.obj;
+          this.agentList = res.obj;
           this.listLoading = false;
         } else {
           this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
@@ -73,22 +77,23 @@ export default {
     },
     handleReset: function () {
       this.filters = {
-        userName: ""
+        agentName: "",
+        mobile: ""
       }
     },
     //删除
     handleDel: function (index, row) {
-      this.$confirm("确认删除该记录吗?", "提示", {
+      this.$confirm("确认删除该用户吗?", "提示", {
         type: "warning"
       })
         .then(() => {
           this.listLoading = true;
           let agentId = row.agentId;
-          deleteUserById(agentId).then((res) => {
+          deleteAgentById(agentId).then((res) => {
             if (res.code == ResponseEnum.SUCCESS.code) {
               this.listLoading = false;
               this.$message({ message: '删除成功', type: 'success' });
-              this.getUsers();
+              this.queryAgentListPage();
             } else {
               this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
             }
@@ -101,6 +106,7 @@ export default {
     handleEdit: function (index, row) {
       this.editFormVisible = true;
       this.editForm = Object.assign({}, row);
+      this.primaryPassword = row.password;
     },
     //显示新增界面
     handleAdd: function () {
@@ -109,7 +115,6 @@ export default {
         agentName: "",
         password: "",
         confirmPassword: "",
-        inviteCode: "",
         mobile: ""
       }
     },
@@ -119,14 +124,16 @@ export default {
         if (valid) {
           this.editLoading = true;
           let bodyParam = Object.assign({}, this.editForm);
-          bodyParam.userType="1";
-          updateUser(bodyParam).then((res) => {
+          if (this.primaryPassword == this.editForm.password) {
+            bodyParam.password = null;
+          }
+          updateAgent(bodyParam).then((res) => {
             if (res.code == ResponseEnum.SUCCESS.code) {
               this.editLoading = false;
               this.$message({ message: '修改成功', type: 'success' });
               this.$refs['editForm'].resetFields();
               this.editFormVisible = false;
-              this.getUsers();
+              this.queryAgentListPage();
             } else {
               this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
             }
@@ -144,15 +151,16 @@ export default {
           this.addLoading = true;
           let bodyParam = Object.assign({}, this.addForm);
           delete bodyParam.confirmPassword;
-          addUser(bodyParam).then((res) => {
+          addAgent(bodyParam).then((res) => {
             if (res.code == ResponseEnum.SUCCESS.code) {
               this.addLoading = false;
               this.$message({ message: '添加成功', type: 'success' });
               this.$refs['addForm'].resetFields();
               this.addFormVisible = false;
-              this.getUsers();
+              this.queryAgentListPage();
             } else {
-              this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+              this.$message({ message: res.msg, type: 'error' });
+              this.addLoading = false;
             }
           }).catch(err => {
             this.addLoading = false;
@@ -173,6 +181,6 @@ export default {
     }
   },
   mounted() {
-    this.getUsers();
+    this.queryAgentListPage();
   }
 };

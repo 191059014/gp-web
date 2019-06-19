@@ -1,41 +1,26 @@
-import { getAgentListPage, getAgentLevelCombobox, getRealAuthStatusCombobox } from '../../api/system';
+import { getUserListPage, getRealAuthStatusCombobox } from '../../api/system';
 
 export default {
     data() {
         return {
             filters: {
-                agentName: "",
+                userName: "",
                 mobile: ""
             },
-            agentList: [],
+            userList: [],
             total: 0,
             pageNum: 1,
             pageSize: 10,
             listLoading: false,
             sels: [], //列表选中列
-
-            agentLevelList: [],
             realAuthStatusList: []
         };
     },
     methods: {
-        getAgentLevelList() {
-            getAgentLevelCombobox().then(res => {
-                this.agentLevelList = res.obj;
-            })
-        },
         getRealAuthStatusList() {
             getRealAuthStatusCombobox().then(res => {
                 this.realAuthStatusList = res.obj;
             })
-        },
-        formatAgentLevel(row, column) {
-            for (let i in this.agentLevelList) {
-                if (row.agentLevel == this.agentLevelList[i].value) {
-                    return this.agentLevelList[i].name;
-                }
-            }
-            return row.agentLevel;
         },
         formatRealAuthStatus(row, column) {
             for (let i in this.realAuthStatusList) {
@@ -54,15 +39,16 @@ export default {
             this.queryAgentListPage();
         },
         //获取用户列表
-        queryAgentListPage() {
+        queryUserListPage() {
             let bodyParam = {
-                userName: this.filters.userName
+                userName: this.filters.userName,
+                mobile: this.mobile
             };
             this.listLoading = true;
-            getAgentListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
+            getUserListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
                 if (res.code == ResponseEnum.SUCCESS.code) {
                     this.total = res.total;
-                    this.agentList = res.obj;
+                    this.userList = res.obj;
                     this.listLoading = false;
                 } else {
                     this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
@@ -72,7 +58,7 @@ export default {
         },
         handleReset: function () {
             this.filters = {
-                agentName: "",
+                userName: "",
                 mobile: ""
             }
         },
@@ -81,8 +67,7 @@ export default {
         }
     },
     mounted() {
-        this.queryAgentListPage();
-        this.getAgentLevelList();
+        this.queryUserListPage();
         this.getRealAuthStatusList();
     }
 };

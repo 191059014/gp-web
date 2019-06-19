@@ -13,7 +13,7 @@
       </el-col>
       <el-col :span="4" class="userinfo">
         <el-dropdown trigger="hover">
-          <span class="el-dropdown-link userinfo-inner">黄彪</span>
+          <span class="el-dropdown-link userinfo-inner">{{loginUserName}}</span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item icon="el-icon-edit">修改密码</el-dropdown-item>
             <el-dropdown-item icon="el-icon-minus">余额提取</el-dropdown-item>
@@ -126,5 +126,5 @@
 <script src="../js/workbench.js"></script>
 
 <style>
-  @import "../css/workbench.css";
+@import "../css/workbench.css";
 </style>
