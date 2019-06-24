@@ -21,10 +21,14 @@ export const deleteAgentById = agentId => { return axios.get(`${baseUrl}/control
  */
 // 支付状态下拉框
 export const getOfflinePayStatusCombobox = () => { return axios.get(`${baseUrl}/controller/offlinePay/getOfflinePayStatusCombobox`).then(res => res.data); };
-// 支付类型下拉框
-export const getOfflinePayTypeCombobox = () => { return axios.get(`${baseUrl}/controller/offlinePay/getOfflinePayTypeCombobox`).then(res => res.data); };
+// 支付渠道下拉框
+export const getOfflinePayChannelCombobox = () => { return axios.get(`${baseUrl}/controller/offlinePay/getOfflinePayChannelCombobox`).then(res => res.data); };
+// 审核状态下拉框
+export const getOfflineCheckStatusCombobox = () => { return axios.get(`${baseUrl}/controller/offlinePay/getOfflineCheckStatusCombobox`).then(res => res.data); };
 // 分页查询线下支付列表
 export const getOfflinePayListPage = (pageNum, pageSize, bodyParam) => { return axios.post(`${baseUrl}/controller/offlinePay/getOfflinePayListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
+// 修改审核信息
+export const updateOfflinePay = params => { return axios.post(`${baseUrl}/controller/offlinePay/update`, params).then(res => res.data); };
 
 /**
  * 代理商管理

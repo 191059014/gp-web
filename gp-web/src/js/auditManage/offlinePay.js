@@ -1,18 +1,32 @@
-import { getOfflinePayStatusCombobox, getOfflinePayTypeCombobox, getOfflinePayListPage } from '../../api/system';
+import { getOfflinePayStatusCombobox, getOfflineCheckStatusCombobox, getOfflinePayChannelCombobox, getOfflinePayListPage, updateOfflinePay } from '../../api/system';
 export default {
     data() {
         return {
             filters: {
                 payStatus: "",
-                payType: ""
+                payChannel: ""
             },
             payStatusList: [],
-            payTypeList: [],
+            payChannelList: [],
+            checkStatusList: [],
             total: 0,
             pageNum: 1,
             pageSize: 10,
             listLoading: false,
-            offlinePayList: []
+            offlinePayList: [],
+            editFormVisible: false, //编辑界面是否显示
+            editLoading: false,
+            editFormLabelWidth: '120px',
+            editFormRules: {
+                checkStatus: [{ required: true, message: "请审核", trigger: "blur" }],
+                systemRemark: [{ required: true, message: "请输入备注", trigger: "blur" }]
+            },
+            //编辑界面数据
+            editForm: {
+                checkId: "",
+                checkStatus: "",
+                systemRemark: ""
+            },
         }
     },
     methods: {
@@ -21,9 +35,14 @@ export default {
                 this.payStatusList = res.obj;
             })
         },
-        getOfflinePayTypeCombobox: function () {
-            getOfflinePayTypeCombobox().then(res => {
-                this.payTypeList = res.obj;
+        getOfflineCheckStatusCombobox: function () {
+            getOfflineCheckStatusCombobox().then(res => {
+                this.checkStatusList = res.obj;
+            })
+        },
+        getOfflinePayChannelCombobox: function () {
+            getOfflinePayChannelCombobox().then(res => {
+                this.payChannelList = res.obj;
             })
         },
         handleSizeChange(val) {
@@ -32,16 +51,29 @@ export default {
         handleCurrentChange(val) {
             this.pageNum = val;
         },
+        //显示编辑界面
+        handleEdit: function (index, row) {
+            this.editFormVisible = true;
+            this.editForm = Object.assign({}, row);
+        },
         handleReset: function () {
             this.filters = {
                 payStatus: "",
                 payType: ""
             }
-          },
-        formatPayType: function (row, cloum) {
-            for (let i in this.payTypeList) {
-                if (row.payType == this.payTypeList[i].value) {
-                    return this.payTypeList[i].name;
+        },
+        formatPayChannel: function (row, cloum) {
+            for (let i in this.payChannelList) {
+                if (row.payChannel == this.payChannelList[i].value) {
+                    return this.payChannelList[i].name;
+                }
+            }
+            return row.payType;
+        },
+        formatCheckStatus: function (row, cloum) {
+            for (let i in this.checkStatusList) {
+                if (row.checkStatus == this.checkStatusList[i].value) {
+                    return this.checkStatusList[i].name;
                 }
             }
             return row.payType;
@@ -70,11 +102,35 @@ export default {
                 }
             }).catch(err => {
             });
-        }
+        },
+        //编辑
+        editSubmit: function () {
+            this.$refs.editForm.validate(valid => {
+                if (valid) {
+                    this.editLoading = true;
+                    let bodyParam = Object.assign({}, this.editForm);
+                    updateOfflinePay(bodyParam).then((res) => {
+                        if (res.code == ResponseEnum.SUCCESS.code) {
+                            this.editLoading = false;
+                            this.$message({ message: '修改成功', type: 'success' });
+                            this.$refs['editForm'].resetFields();
+                            this.editFormVisible = false;
+                            this.queryList();
+                        } else {
+                            this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+                        }
+                    }).catch(err => {
+                        this.editLoading = false;
+                        this.editFormVisible = false;
+                    });
+                }
+            });
+        },
     },
     mounted() {
         this.getOfflinePayStatusCombobox();
-        this.getOfflinePayTypeCombobox();
+        this.getOfflineCheckStatusCombobox();
+        this.getOfflinePayChannelCombobox();
         this.queryList();
     }
 

@@ -16,7 +16,7 @@
         <el-form-item>
           <el-select v-model="filters.payType" placeholder="请选择支付类型">
             <el-option
-              v-for="item in payTypeList"
+              v-for="item in payChannelList"
               :key="item.value"
               :label="item.name"
               :value="item.value"
@@ -39,22 +39,20 @@
       v-loading="listLoading"
       style="width: 100%;"
     >
-      <el-table-column prop="payId" label="编号" style="width:5%"></el-table-column>
-      <el-table-column prop="customerName" label="客户名称" style="width:8%"></el-table-column>
+      <el-table-column prop="checkId" label="编号" style="width:5%"></el-table-column>
+      <el-table-column prop="userName" label="客户名称" style="width:8%"></el-table-column>
       <el-table-column prop="mobile" label="客户手机" style="width:8%"></el-table-column>
-      <el-table-column prop="payMoney" label="支付金额" style="width:5%"></el-table-column>
-      <el-table-column prop="payType" label="支付类型" style="width:8%" :formatter="formatPayType"></el-table-column>
-      <el-table-column prop="payStatus" label="支付状态" style="width:8%" :formatter="formatPayStatus"></el-table-column>
-      <el-table-column prop="createTime" label="发生时间" style="width:15%"></el-table-column>
-      <el-table-column prop="bankNo" label="银行卡" style="width:15%"></el-table-column>
+      <el-table-column prop="happenMoney" label="发生金额" style="width:5%"></el-table-column>
+      <el-table-column prop="payChannel" label="支付渠道" style="width:8%" :formatter="formatPayChannel"></el-table-column>
+      <el-table-column prop="payStatus" label="支付状态" style="width:15%" :formatter="formatPayStatus"></el-table-column>
+      <el-table-column prop="checkStatus" label="审核状态" style="width:8%" :formatter="formatCheckStatus"></el-table-column>
       <el-table-column prop="remark" label="备注" style="width:10%"></el-table-column>
       <el-table-column prop="systemRemark" label="管理员备注" style="width:10%"></el-table-column>
+      <el-table-column prop="createTime" label="创建时间" style="width:10%"></el-table-column>
       <el-table-column label="操作" style="width:20%">
-        #
-        <!-- <template scope="scope">
+        <template scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
-        </template>-->
+        </template>
       </el-table-column>
     </el-table>
 
@@ -70,6 +68,33 @@
         style="float:right;"
       ></el-pagination>
     </el-col>
+
+<!--编辑界面-->
+    <el-dialog title="修改" :visible.sync="editFormVisible">
+      <el-form :model="editForm" :rules="editFormRules" ref="editForm">
+        <el-form-item label="审核ID" :label-width="editFormLabelWidth" style="display:none;">
+          <el-input v-model="editForm.checkId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="审核" :label-width="editFormLabelWidth">
+          <el-select v-model="editForm.checkStatus" placeholder="请审核">
+            <el-option
+              v-for="item in checkStatusList"
+              :key="item.value"
+              :label="item.name"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="管理员备注" :label-width="editFormLabelWidth">
+          <el-input v-model="editForm.systemRemark" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="editFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editSubmit" :loading="editLoading">确定修改</el-button>
+      </div>
+    </el-dialog>
+
   </section>
 </template>
 
