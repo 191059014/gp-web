@@ -125,3 +125,13 @@ body {
   .el-dropdown-menu {
     margin-top: 0 !important;
   }
+
+  .toolbar {
+    background: #f2f2f2;
+    padding: 10px;
+    margin: 10px 0;
+  }
+
+  section {
+    overflow-y: auto
+  }

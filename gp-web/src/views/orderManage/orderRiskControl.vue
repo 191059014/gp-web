@@ -28,28 +28,68 @@
     <!--列表-->
     <el-table :data="orderList" highlight-current-row v-loading="listLoading" style="width: 100%;">
       <el-table-column prop="userName" label="客户姓名" style="width:5%">
-        <el-table-column prop="mobile" label="手机号" style="width:6%" :formatter="formatMobile"></el-table-column>
+        <el-table-column
+          prop="mobile"
+          label="手机号"
+          style="width:6%"
+          :formatter="formatUserNameAndMobile"
+        ></el-table-column>
       </el-table-column>
       <el-table-column prop="stockCode" label="股票代码" style="width:5%">
-        <el-table-column prop="stockName" label="股票名称" style="width:6%"></el-table-column>
+        <el-table-column
+          prop="stockName"
+          label="股票名称"
+          style="width:6%"
+          :formatter="formatStockCodeAndStockName"
+        ></el-table-column>
       </el-table-column>
       <el-table-column prop="buyNumber" label="买入股数" style="width:5%"></el-table-column>
       <el-table-column prop="buyPrice" label="买入价格" style="width:6%">
-        <el-table-column prop="buyPriceTotal" label="买入总金额" style="width:6%"></el-table-column>
+        <el-table-column
+          prop="buyPriceTotal"
+          label="买入总金额"
+          style="width:6%"
+          :formatter="formatBuyPriceAndBuyPriceTotal"
+        ></el-table-column>
       </el-table-column>
       <el-table-column prop="sellPrice" label="卖出价格" style="width:5%">
-        <el-table-column prop="sellPriceTotal" label="卖出总价格" style="width:6%"></el-table-column>
+        <el-table-column
+          prop="sellPriceTotal"
+          label="卖出总价格"
+          style="width:6%"
+          :formatter="formatSellPriceAndSellPriceTotal"
+        ></el-table-column>
       </el-table-column>
       <el-table-column prop="strategyOwnMoney" label="策略本金" style="width:5%">
-        <el-table-column prop="strategyMoney" label="策略金额" style="width:6%"></el-table-column>
+        <el-table-column
+          prop="strategyMoney"
+          label="策略金额"
+          style="width:6%"
+          :formatter="formatStrategyOwnMoneyAndStrategyMoney"
+        ></el-table-column>
       </el-table-column>
       <el-table-column prop="profit" label="利润" style="width:5%">
-        <el-table-column prop="profitRate" label="盈亏率" style="width:6%"></el-table-column>
+        <el-table-column
+          prop="profitRate"
+          label="盈亏率"
+          style="width:6%"
+          :formatter="formatProfitAndProfitRate"
+        ></el-table-column>
       </el-table-column>
       <el-table-column prop="stopEarnMoney" label="止盈价格" style="width:5%">
-        <el-table-column prop="stopLossMoney" label="止损价格" style="width:6%"></el-table-column>
+        <el-table-column
+          prop="stopLossMoney"
+          label="止损价格"
+          style="width:6%"
+          :formatter="formatStopEarnMoneyAndStopLossMoney"
+        ></el-table-column>
       </el-table-column>
-      <el-table-column prop="serviceMoney" label="信息服务费" style="width:5%">
+      <el-table-column
+        prop="serviceMoney"
+        label="信息服务费"
+        style="width:5%"
+        :formatter="formatServiceMoneyAndDelayMoney"
+      >
         <el-table-column prop="delayMoney" label="递延金" style="width:6%"></el-table-column>
       </el-table-column>
       <el-table-column

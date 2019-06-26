@@ -1,5 +1,4 @@
-.toolbar {
-    background: #f2f2f2;
-    padding: 10px;
-    margin: 10px 0;
-  }
+.el-table .cell {
+    white-space: pre-line
+}
+

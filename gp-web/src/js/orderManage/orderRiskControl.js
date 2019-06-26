@@ -22,10 +22,29 @@ export default {
                 this.orderStatusList = res.obj;
             })
         },
-        formatMobile(row, column) {
-            var ele = this.$createElement('div', '<p>' + row.userName + '</p><p>' + row.mobile + '</p>');
-            var ele2 = row.userName+"<br/>"+row.mobile;
-            return ele2;
+        formatUserNameAndMobile(row, column) {
+            return row.userName + '\n' + row.mobile;
+        },
+        formatStockCodeAndStockName(row, column) {
+            return row.stockCode + '\n' + row.stockName;
+        },
+        formatBuyPriceAndBuyPriceTotal(row, column) {
+            return row.buyPrice + '\n' + row.buyPriceTotal;
+        },
+        formatSellPriceAndSellPriceTotal(row, column) {
+            return row.sellPrice + '\n' + row.sellPriceTotal;
+        },
+        formatStrategyOwnMoneyAndStrategyMoney(row, column) {
+            return row.strategyOwnMoney + '\n' + row.strategyMoney;
+        },
+        formatProfitAndProfitRate(row, column) {
+            return row.profit + '\n' + row.profitRate;
+        },
+        formatStopEarnMoneyAndStopLossMoney(row, column) {
+            return row.stopEarnMoney + '\n' + row.stopLossMoney;
+        },
+        formatServiceMoneyAndDelayMoney(row, column) {
+            return row.serviceMoney + '\n' + row.delayMoney;
         },
         formatOrderStatus(row, column) {
             for (let i in this.orderStatusList) {
@@ -37,11 +56,11 @@ export default {
         },
         handleSizeChange(val) {
             this.pageSize = val;
-            this.queryCustomerFundDetailListPage();
+            this.queryOrderListPage();
         },
         handleCurrentChange(val) {
             this.pageNum = val;
-            this.queryCustomerFundDetailListPage();
+            this.queryOrderListPage();
         },
         //获取订单列表
         queryOrderListPage() {
