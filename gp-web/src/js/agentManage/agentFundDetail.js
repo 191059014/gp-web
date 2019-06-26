@@ -56,7 +56,7 @@ export default {
                     return this.fundTypeList[i].name;
                 }
             }
-            return "";
+            return row.type;
         },
         handleSizeChange(val) {
             this.pageSize = val;

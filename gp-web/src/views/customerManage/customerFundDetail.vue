@@ -29,7 +29,7 @@
       <el-table-column prop="agentName" label="代理商姓名" style="width:6%"></el-table-column>
       <el-table-column prop="happenMoney" label="发生金额" style="width:20%"></el-table-column>
       <el-table-column prop="afterHappenMoney" label="发生后金额" style="width:15%"></el-table-column>
-      <el-table-column prop="fundType" label="资金类型" style="width:6%"></el-table-column>
+      <el-table-column prop="fundType" label="资金类型" style="width:6%" :formatter="formatFundType"></el-table-column>
       <el-table-column prop="remark" label="备注" style="width:6%"></el-table-column>
       <el-table-column prop="createTime" label="创建时间" style="width:13%"></el-table-column>
     </el-table>

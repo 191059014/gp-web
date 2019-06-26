@@ -53,3 +53,11 @@ export const getUserListPage = (pageNum, pageSize, bodyParam) => { return axios.
 export const getCustomerFundListPage = (pageNum, pageSize, bodyParam) => { return axios.post(`${baseUrl}/controller/customerFund/getCustomerFundListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
 // 分页查询客户资金流水信息
 export const getCustomerFundDetailListPage = (pageNum, pageSize, bodyParam) => { return axios.post(`${baseUrl}/controller/customerFundDetail/getCustomerFundDetailListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
+
+/**
+ * 订单管理
+ */
+// 分页查询订单
+export const getOrderListPage = (pageNum, pageSize, bodyParam) => { return axios.post(`${baseUrl}/controller/order/getOrderListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
+// 订单状态
+export const getOrderStatusCombobox = () => { return axios.get(`${baseUrl}/controller/order/getOrderStatusCombobox`).then(res => res.data); };

@@ -1,34 +1,39 @@
-import { getCustomerFundDetailListPage, getFundTypeCombobox } from '../../api/system';
+import { getOrderListPage, getOrderStatusCombobox } from '../../api/system';
 
 export default {
     data() {
         return {
             filters: {
                 userName: "",
-                agentName: ""
+                orderStatus: ""
             },
-            customerFundDetailList: [],
+            orderList: [],
             total: 0,
             pageNum: 1,
             pageSize: 10,
             listLoading: false,
             sels: [], //列表选中列
-            fundTypeList: []
+            orderStatusList: []
         };
     },
     methods: {
-        getFundTypeList() {
-            getFundTypeCombobox().then(res => {
-                this.fundTypeList = res.obj;
+        getOrderStatusList() {
+            getOrderStatusCombobox().then(res => {
+                this.orderStatusList = res.obj;
             })
         },
-        formatFundType(row, column) {
-            for (let i in this.fundTypeList) {
-                if (row.fundType == this.fundTypeList[i].value) {
-                    return this.fundTypeList[i].name;
+        formatMobile(row, column) {
+            var ele = this.$createElement('div', '<p>' + row.userName + '</p><p>' + row.mobile + '</p>');
+            var ele2 = row.userName+"<br/>"+row.mobile;
+            return ele2;
+        },
+        formatOrderStatus(row, column) {
+            for (let i in this.orderStatusList) {
+                if (row.orderStatus == this.orderStatusList[i].value) {
+                    return this.orderStatusList[i].name;
                 }
             }
-            return row.fundType;
+            return row.orderStatus;
         },
         handleSizeChange(val) {
             this.pageSize = val;
@@ -38,17 +43,17 @@ export default {
             this.pageNum = val;
             this.queryCustomerFundDetailListPage();
         },
-        //获取用户列表
-        queryCustomerFundDetailListPage() {
+        //获取订单列表
+        queryOrderListPage() {
             let bodyParam = {
                 userName: this.filters.userName,
-                agentName: this.filters.agentName
+                orderStatus: this.filters.orderStatus
             };
             this.listLoading = true;
-            getCustomerFundDetailListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
+            getOrderListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
                 if (res.code == ResponseEnum.SUCCESS.code) {
                     this.total = res.total;
-                    this.customerFundDetailList = res.obj;
+                    this.orderList = res.obj;
                     this.listLoading = false;
                 } else {
                     this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
@@ -59,7 +64,7 @@ export default {
         handleReset: function () {
             this.filters = {
                 userName: "",
-                agentName: ""
+                orderStatus: ""
             }
         },
         selsChange: function (sels) {
@@ -67,7 +72,7 @@ export default {
         }
     },
     mounted() {
-        this.queryCustomerFundDetailListPage();
-        this.getFundTypeList();
+        this.queryOrderListPage();
+        this.getOrderStatusList();
     }
 };
