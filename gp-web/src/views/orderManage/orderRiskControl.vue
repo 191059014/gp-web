@@ -84,13 +84,8 @@
           :formatter="formatStopEarnMoneyAndStopLossMoney"
         ></el-table-column>
       </el-table-column>
-      <el-table-column
-        prop="serviceMoney"
-        label="信息服务费"
-        style="width:5%"
-        :formatter="formatServiceMoneyAndDelayMoney"
-      >
-        <el-table-column prop="delayMoney" label="递延金" style="width:6%"></el-table-column>
+      <el-table-column prop="serviceMoney" label="信息服务费" style="width:5%">
+        <el-table-column prop="delayMoney" label="递延金" style="width:6%" :formatter="formatServiceMoneyAndDelayMoney"></el-table-column>
       </el-table-column>
       <el-table-column
         prop="orderStatus"
@@ -100,7 +95,7 @@
       ></el-table-column>
       <el-table-column label="操作" style="width:20%">
         <template scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button type="primary" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
