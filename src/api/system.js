@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let baseUrl = 'http://localhost:8090';
+let baseUrl = 'http://192.168.17.128:8090';
 
 /**
  * 系统管理
