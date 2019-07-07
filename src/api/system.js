@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 function getBaseUrl() {
-    if (window.location.href.includes('localhost')) {
+    if (window.location.host.includes('localhost')) {
         return process.env.BASE_URL_DEV;
     }
-    if (window.location.href.includes('192.168')) {
-        return process.env.BASE_URL_TEST;
+    if (window.location.host.includes('192.168')) {
+        return 'http://192.168.17.128:8090/';
     }
     return '';
 }
