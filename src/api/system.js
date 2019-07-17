@@ -18,6 +18,22 @@ export const addAgent = params => { return service.post(`controller/agent/addAge
 export const updateAgent = params => { return service.post(`controller/agent/updateAgent`, params).then(res => res.data); };
 // 删除代理商
 export const deleteAgentById = agentId => { return service.get(`controller/agent/deleteAgentById?agentId=` + agentId).then(res => res.data); };
+// 分页获取角色列表
+export const getRoleListPage = (pageNum, pageSize, bodyParam) => { return service.post(`controller/role/getRoleListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
+// 添加角色
+export const addRole = params => { return service.post(`controller/role/addRole`, params).then(res => res.data); };
+// 修改角色
+export const updateRole = params => { return service.post(`controller/role/updateRole`, params).then(res => res.data); };
+// 删除角色
+export const deleteRoleById = roleId => { return service.get(`controller/role/deleteRoleById?roleId=` + roleId).then(res => res.data); };
+// 分页获取权限列表
+export const getPermissionListPage = (pageNum, pageSize, bodyParam) => { return service.post(`controller/permission/getPermissionListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
+// 添加权限
+export const addPermission = params => { return service.post(`controller/permission/addPermission`, params).then(res => res.data); };
+// 修改权限
+export const updatePermission = params => { return service.post(`controller/permission/updatePermission`, params).then(res => res.data); };
+// 删除权限
+export const deletePermissionById = permissionId => { return service.get(`controller/permission/deletePermissionById?permissionId=` + permissionId).then(res => res.data); };
 
 /**
  * 审核管理
