@@ -34,6 +34,8 @@ export const addPermission = params => { return service.post(`controller/permiss
 export const updatePermission = params => { return service.post(`controller/permission/updatePermission`, params).then(res => res.data); };
 // 删除权限
 export const deletePermissionById = permissionId => { return service.get(`controller/permission/deletePermissionById?permissionId=` + permissionId).then(res => res.data); };
+// 获取资源类型下拉框
+export const getSourceTypeCombobox = () => { return service.get(`controller/permission/getSourceTypeCombobox`).then(res => res.data); };
 
 /**
  * 审核管理

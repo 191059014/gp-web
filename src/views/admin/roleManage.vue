@@ -10,6 +10,9 @@
           <el-button type="primary" v-on:click="queryRoleListPage">查询</el-button>
         </el-form-item>
         <el-form-item>
+          <el-button type="primary" @click="handleAdd">新增</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="handleReset">重置</el-button>
         </el-form-item>
       </el-form>
@@ -52,7 +55,7 @@
           <el-input v-model="editForm.roleName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="描述" :label-width="editFormLabelWidth">
-          <el-input v-model="editForm.description" autocomplete="off" show-password></el-input>
+          <el-input v-model="editForm.description" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -68,7 +71,7 @@
           <el-input v-model="addForm.roleName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="描述" :label-width="addFormLabelWidth">
-          <el-input v-model="addForm.description" autocomplete="off" show-password></el-input>
+          <el-input v-model="addForm.description" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

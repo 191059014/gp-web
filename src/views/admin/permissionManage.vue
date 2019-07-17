@@ -11,13 +11,16 @@
             <el-option
               v-for="item in sourceTypeList"
               :key="item.value"
-              :label="item.desc"
+              :label="item.name"
               :value="item.value"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="queryPermissionListPage">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleAdd">新增</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleReset">重置</el-button>
@@ -72,12 +75,12 @@
         <el-form-item label="权限名称" :label-width="editFormLabelWidth">
           <el-input v-model="editForm.permissionName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="资源类型">
+        <el-form-item label="资源类型" :label-width="editFormLabelWidth">
           <el-select v-model="editForm.sourceType" placeholder="请选择资源类型">
             <el-option
               v-for="item in sourceTypeList"
               :key="item.value"
-              :label="item.desc"
+              :label="item.name"
               :value="item.value"
             ></el-option>
           </el-select>
@@ -98,12 +101,12 @@
         <el-form-item label="权限名称" :label-width="addFormLabelWidth">
           <el-input v-model="addForm.permissionName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="资源类型">
+        <el-form-item label="资源类型" :label-width="addFormLabelWidth">
           <el-select v-model="addForm.sourceType" placeholder="请选择资源类型">
             <el-option
               v-for="item in sourceTypeList"
               :key="item.value"
-              :label="item.desc"
+              :label="item.name"
               :value="item.value"
             ></el-option>
           </el-select>

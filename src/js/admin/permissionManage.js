@@ -1,4 +1,4 @@
-import { getPermissionListPage, addPermission, updatePermission, deletePermissionById } from '../../api/system';
+import { getPermissionListPage, addPermission, updatePermission, deletePermissionById, getSourceTypeCombobox } from '../../api/system';
 
 export default {
     data() {
@@ -8,6 +8,7 @@ export default {
                 sourceType: ""
             },
             permissionList: [],
+            sourceTypeList: [],
             total: 0,
             pageNum: 1,
             pageSize: 10,
@@ -52,6 +53,19 @@ export default {
         handleCurrentChange(val) {
             this.pageNum = val;
             this.queryPermissionListPage();
+        },
+        formatSourceType(row, column) {
+            for (let i in this.sourceTypeList) {
+                if (row.sourceType == this.sourceTypeList[i].value) {
+                    return this.sourceTypeList[i].name;
+                }
+            }
+            return row.sourceType;
+        },
+        querySourceTypeCombobox() {
+            getSourceTypeCombobox().then((res) => {
+                this.sourceTypeList = res.obj;
+            })
         },
         //获取角色列表
         queryPermissionListPage() {
@@ -162,5 +176,6 @@ export default {
     },
     mounted() {
         this.queryPermissionListPage();
+        this.querySourceTypeCombobox();
     }
 };

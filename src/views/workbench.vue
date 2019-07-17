@@ -56,7 +56,7 @@
             </el-menu-item>
           </template>
         </el-menu>
-        <!--导航菜单-折叠后-->
+        <!-- 导航菜单-折叠后
         <ul class="el-menu el-menu-vertical collapsed" v-show="collapsed" ref="menuCollapsed">
           <li
             v-for="(item,index) in $router.options.routes"
@@ -102,7 +102,7 @@
               </li>
             </template>
           </li>
-        </ul>
+        </ul> -->
       </aside>
       <section class="content-container">
         <div class="grid-content bg-purple-light">

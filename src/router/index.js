@@ -37,10 +37,13 @@ export const constantRouterMap = [
     component: workbench,
     name: '系统管理',
     iconCls: 'el-icon-setting',
+    meta: {
+      permissionValue: 'sys:manage'
+    },
     children: [
-      { path: '/userManage', component: userManage, name: '用户管理' },
-      { path: '/roleManage', component: roleManage, name: '角色管理' },
-      { path: '/permissionManage', component: permissionManage, name: '权限管理' }
+      { path: '/userManage', component: userManage, name: '用户管理', meta: { permissionValue: 'sys:agent:manage' } },
+      { path: '/roleManage', component: roleManage, name: '角色管理', meta: { permissionValue: 'sys:role:manage' } },
+      { path: '/permissionManage', component: permissionManage, name: '权限管理', meta: { permissionValue: 'sys:permission:manage' } }
     ]
   }, {
     path: '/',

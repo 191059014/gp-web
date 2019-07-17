@@ -1,11 +1,9 @@
 export default {
   data() {
     return {
-      loginUserName: sessionStorage.getItem(USER_SESSION_KEY_agentName),
+      loginUserName: "",
       sysName: "后台管理系统",
       collapsed: false,
-      sysUserName: "",
-      sysUserAvatar: "",
       form: {
         name: "",
         region: "",
@@ -52,11 +50,6 @@ export default {
     }
   },
   mounted() {
-    var user = sessionStorage.getItem("user");
-    if (user) {
-      user = JSON.parse(user);
-      this.sysUserName = user.name || "";
-      this.sysUserAvatar = user.avatar || "";
-    }
+    this.loginUserName = sessionStorage.getItem(USER_SESSION_KEY_agentName);
   }
 };
