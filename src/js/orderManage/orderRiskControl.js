@@ -75,7 +75,7 @@ export default {
                     this.orderList = res.obj;
                     this.listLoading = false;
                 } else {
-                    this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+                    this.$message({ message: res.msg, type: 'error' });
                 }
             }).catch(err => {
             });
