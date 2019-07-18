@@ -1,4 +1,4 @@
-import { getAgentListPage, addAgent, updateAgent, deleteAgentById } from '../../api/system';
+import { getAgentListPage, addAgent, updateAgent, deleteAgentById, findRoleTree, batchInsertAgentRole } from '../../api/system';
 
 export default {
   data() {
@@ -45,7 +45,12 @@ export default {
         password: "",
         confirmPassword: "",
         mobile: ""
-      }
+      },
+      roleTree: [],
+      defaultCheckedKeys: [],
+      editRoleVisible: false,
+      editRoleLoading: false,
+      currentAgentId: ""
     };
   },
   methods: {
@@ -178,9 +183,32 @@ export default {
       this.$confirm("确认删除选中记录吗？", "提示", { type: "warning" })
         .then(() => { })
         .catch(() => { });
+    },
+    handleRole: function (index, row) {
+      this.defaultCheckedKeys=row.roleIdSet;
+      this.editRoleVisible = true;
+      this.currentAgentId = row.agentId;
+    },
+    editRoleSubmit: function () {
+      let roleIdArr = this.$refs.tree.getCheckedKeys();
+      batchInsertAgentRole(roleIdArr, this.currentAgentId).then(res => {
+        if (res.code == ResponseEnum.SUCCESS.code) {
+          this.$message({ message: '修改成功', type: 'success' });
+          this.editRoleVisible = false;
+          this.queryAgentListPage();
+        } else {
+          this.$message({ message: res.msg, type: 'error' });
+        }
+      })
+    },
+    loadRoleTree: function () {
+      findRoleTree().then(res => {
+        this.roleTree = res.obj;
+      })
     }
   },
   mounted() {
     this.queryAgentListPage();
+    this.loadRoleTree();
   }
 };

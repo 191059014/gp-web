@@ -39,6 +39,7 @@ export default {
             },
 
             permissionTree: [],
+            defaultCheckedKeys: [],
             editPermissionVisible: false,
             editPermissionLoading: false,
             currentRoleId: ""
@@ -55,7 +56,6 @@ export default {
         },
         //获取角色列表
         queryRoleListPage() {
-            console.info(this.$router.options.routes);
             let bodyParam = {
                 roleName: this.filters.roleName
             };
@@ -158,6 +158,7 @@ export default {
             });
         },
         handleEditPermission: function (index, row) {
+            this.defaultCheckedKeys = row.permissionValueSet;
             this.editPermissionVisible = true;
             this.currentRoleId = row.roleId;
         },
@@ -185,8 +186,9 @@ export default {
             }
             batchInsertRolePermission(permissionArr, this.currentRoleId).then(res => {
                 if (res.code == ResponseEnum.SUCCESS.code) {
-                    this.$message({ message: '批量添加成功', type: 'success' });
-                    editPermissionVisible = false;
+                    this.$message({ message: '修改成功', type: 'success' });
+                    this.editPermissionVisible = false;
+                    this.queryRoleListPage();
                 } else {
                     this.$message({ message: res.msg, type: 'error' });
                 }

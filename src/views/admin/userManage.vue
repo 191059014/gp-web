@@ -40,6 +40,7 @@
         <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+          <el-button size="small" @click="handleRole(scope.$index, scope.row)">编辑角色</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -99,6 +100,21 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="addFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="addSubmit" :loading="addLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--角色界面-->
+    <el-dialog title="角色树" :visible.sync="editRoleVisible">
+      <el-tree
+        :data="roleTree"
+        :default-checked-keys="defaultCheckedKeys"
+        show-checkbox
+        node-key="id"
+        ref="tree"
+      ></el-tree>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="editRoleVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editRoleSubmit" :loading="editRoleLoading">确 定</el-button>
       </div>
     </el-dialog>
   </section>

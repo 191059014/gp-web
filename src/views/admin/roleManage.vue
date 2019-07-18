@@ -84,11 +84,12 @@
     <!--权限界面-->
     <el-dialog title="权限树" :visible.sync="editPermissionVisible">
       <el-tree
-      :data="permissionTree"
-      show-checkbox
-      node-key="id"
-      ref="tree">
-      </el-tree>
+        :data="permissionTree"
+        :default-checked-keys="defaultCheckedKeys"
+        show-checkbox
+        node-key="id"
+        ref="tree"
+      ></el-tree>
       <div slot="footer" class="dialog-footer">
         <el-button @click="editPermissionVisible = false">取 消</el-button>
         <el-button type="primary" @click="editPermissionSubmit" :loading="editPermissionLoading">确 定</el-button>

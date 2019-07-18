@@ -40,6 +40,10 @@ export const updatePermission = params => { return service.post(`controller/perm
 export const deletePermissionById = permissionId => { return service.get(`controller/permission/deletePermissionById?permissionId=` + permissionId).then(res => res.data); };
 // 获取资源类型下拉框
 export const getSourceTypeCombobox = () => { return service.get(`controller/permission/getSourceTypeCombobox`).then(res => res.data); };
+// 获取所有角色树
+export const findRoleTree = () => { return service.get(`controller/role/findRoleTree`).then(res => res.data); };
+// 批量导入代理商角色关系
+export const batchInsertAgentRole = (bodyParam, agentId) => { return service.post(`controller/agentRole/batchInsert?agentId=` + agentId, bodyParam).then(res => res.data); };
 
 /**
  * 审核管理
