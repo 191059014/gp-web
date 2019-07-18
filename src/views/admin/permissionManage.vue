@@ -20,10 +20,10 @@
           <el-button type="primary" v-on:click="queryPermissionListPage">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleAdd">新增</el-button>
+          <el-button type="primary" @click="handleReset">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleReset">重置</el-button>
+          <el-button type="warning" @click="handleImport">导入最新菜单权限</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -45,12 +45,12 @@
       ></el-table-column>
       <el-table-column prop="permissionValue" label="权限值" style="width:10%"></el-table-column>
       <el-table-column prop="createTime" label="创建时间" style="width:10%"></el-table-column>
-      <el-table-column label="操作" style="width:20%">
+      <!-- <el-table-column label="操作" style="width:20%">
         <template scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>
-      </el-table-column>
+      </el-table-column>-->
     </el-table>
 
     <!--工具条-->

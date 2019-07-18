@@ -30,6 +30,10 @@ export const deleteRoleById = roleId => { return service.get(`controller/role/de
 export const getPermissionListPage = (pageNum, pageSize, bodyParam) => { return service.post(`controller/permission/getPermissionListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
 // 添加权限
 export const addPermission = params => { return service.post(`controller/permission/addPermission`, params).then(res => res.data); };
+// 批量导入权限
+export const batchInsertPermission = params => { return service.post(`controller/permission/batchInsert`, params).then(res => res.data); };
+// 批量导入角色权限关系
+export const batchInsertRolePermission = (bodyParam, roleId) => { return service.post(`controller/rolePermission/batchInsert?roleId=` + roleId, bodyParam).then(res => res.data); };
 // 修改权限
 export const updatePermission = params => { return service.post(`controller/permission/updatePermission`, params).then(res => res.data); };
 // 删除权限

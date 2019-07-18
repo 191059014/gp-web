@@ -1,4 +1,4 @@
-import { getPermissionListPage, addPermission, updatePermission, deletePermissionById, getSourceTypeCombobox } from '../../api/system';
+import { getPermissionListPage, addPermission, updatePermission, deletePermissionById, getSourceTypeCombobox, batchInsertPermission } from '../../api/system';
 
 export default {
     data() {
@@ -117,14 +117,58 @@ export default {
             this.editFormVisible = true;
             this.editForm = Object.assign({}, row);
         },
-        //显示新增界面
-        handleAdd: function () {
-            this.addFormVisible = true;
-            this.addForm = {
-                permissionName: "",
-                sourceType: "",
-                permissionValue: ""
-            }
+        //重新导入所有菜单权限
+        handleImport: function () {
+            this.$confirm("将删除之前所有的权限，确认重新导入吗?", "提示", {
+                type: "warning"
+            }).then(() => {
+                let routes = this.$router.options.routes;
+                let allPermissions = [];
+                // 一级菜单
+                for (let i in routes) {
+                    if (routes[i].path != "/") {
+                        continue;
+                    }
+                    let firstPermission = {};
+                    firstPermission.permissionName = routes[i].name;
+                    firstPermission.sourceType = 1;
+                    firstPermission.permissionValue = routes[i].meta.permissionValue;
+                    allPermissions.push(firstPermission);
+                    // 二级菜单
+                    let childrens = routes[i].children;
+                    if (childrens && childrens.length > 0) {
+                        for (let j in childrens) {
+                            let secondPermission = {};
+                            secondPermission.permissionName = routes[i].name + "-" + childrens[j].name;
+                            secondPermission.sourceType = 1;
+                            secondPermission.permissionValue = childrens[j].meta.permissionValue;
+                            allPermissions.push(secondPermission);
+                            // 三级菜单
+                            let operators = childrens[j].meta.operators;
+                            if (operators && operators.length > 0) {
+                                for (let m in operators) {
+                                    let thirdPermission = {};
+                                    thirdPermission.permissionName = routes[i].name + "-" + childrens[j].name + "-" + operators[m].permissionName;
+                                    thirdPermission.sourceType = 2;
+                                    thirdPermission.permissionValue = operators[m].permissionValue;
+                                    allPermissions.push(thirdPermission);
+                                }
+                            }
+                        }
+                    }
+                }
+                batchInsertPermission(allPermissions).then(res => {
+                    if (res.code == ResponseEnum.SUCCESS.code) {
+                        this.$message({ message: '批量添加成功', type: 'success' });
+                        this.queryPermissionListPage();
+                    } else {
+                        this.$message({ message: res.msg, type: 'error' });
+                    }
+                });
+                debugger;
+            }).catch(err => {
+
+            });
         },
         //编辑
         editSubmit: function () {

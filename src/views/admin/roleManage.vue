@@ -25,9 +25,10 @@
       <el-table-column prop="description" label="描述" style="width:10%"></el-table-column>
       <el-table-column prop="createTime" label="创建时间" style="width:10%"></el-table-column>
       <el-table-column label="操作" style="width:20%">
-        <template scope="scope">
+        <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+          <el-button size="small" @click="handleEditPermission(scope.$index, scope.row)">编辑权限</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -77,6 +78,20 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="addFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="addSubmit" :loading="addLoading">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--权限界面-->
+    <el-dialog title="权限树" :visible.sync="editPermissionVisible">
+      <el-tree
+      :data="permissionTree"
+      show-checkbox
+      node-key="id"
+      ref="tree">
+      </el-tree>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="editPermissionVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editPermissionSubmit" :loading="editPermissionLoading">确 定</el-button>
       </div>
     </el-dialog>
   </section>

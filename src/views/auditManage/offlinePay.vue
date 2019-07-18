@@ -50,7 +50,7 @@
       <el-table-column prop="systemRemark" label="管理员备注" style="width:10%"></el-table-column>
       <el-table-column prop="createTime" label="创建时间" style="width:10%"></el-table-column>
       <el-table-column label="操作" style="width:20%">
-        <template scope="scope">
+        <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
         </template>
       </el-table-column>
