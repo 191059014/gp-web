@@ -33,12 +33,17 @@ export default {
               debugger;
               if (code == ResponseEnum.LOGIN_SUCCESS.code) {
                 // 将登陆信息放入缓存
-                sessionStorage.setItem(USER_SESSION_KEY_agentId, data.obj.agentId);
-                sessionStorage.setItem(USER_SESSION_KEY_agentName, data.obj.agentName);
+                sessionStorage.setItem(CURRENT_USER_SESSION_KEY, JSON.stringify(data.obj));
                 // 获取当前用户的权限
                 getPermissionSet().then(res => {
                   if (res.code == ResponseEnum.SUCCESS.code) {
-                    sessionStorage.setItem(CURRENT_AGENT_PERMISSION, res.obj);
+                    let permissionArr = [];
+                    if (res.obj && res.obj.length > 0) {
+                      for (let i in res.obj) {
+                        permissionArr.push(res.obj[i]);
+                      }
+                    }
+                    sessionStorage.setItem(CURRENT_AGENT_PERMISSION, permissionArr);
                     this.$router.push({ path: "/workbench" });
                     this.$message({ message: msg, type: "success" });
                   } else {

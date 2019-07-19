@@ -17,7 +17,12 @@ const service = axios.create({
 // 请求拦截（配置发送请求的信息）
 service.interceptors.request.use(function (config) {
     // 处理请求之前的配置
-    config.headers.common.Authorization = sessionStorage.getItem(USER_SESSION_KEY_agentId);
+    let agentId = "";
+    let userInfo = sessionStorage.getItem(CURRENT_USER_SESSION_KEY);
+    if (userInfo) {
+        agentId = JSON.parse(userInfo).agentId;
+    }
+    config.headers.common.Authorization = agentId;
     return config;
 }, function (error) {
     // 请求失败的处理

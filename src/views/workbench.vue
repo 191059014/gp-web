@@ -36,7 +36,7 @@
         >
           <template v-for="(item,index) in $router.options.routes">
             <template v-if="!item.hidden">
-              <template v-if="permissionSet && permissionSet.indexOf(item.meta.permissionValue)>0">
+              <template v-if="permissionSet && permissionSet.indexOf(item.meta.permissionValue)>-1">
                 <el-submenu :index="index+''" :key="index">
                   <template slot="title">
                     <i :class="item.iconCls"></i>

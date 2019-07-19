@@ -3,7 +3,7 @@ import router from '../router'
 router.beforeEach((to, from, next) => {
     debugger;
     if (to.path != '/login') {  // 非登陆页面
-        if (sessionStorage.getItem(USER_SESSION_KEY_agentId)) {  // 通过vuex state获取当前的agentId是否存在
+        if (sessionStorage.getItem(CURRENT_USER_SESSION_KEY)) {  // 判断当前的用户会话是否存在
             next();
         } else {
             this.$message({ message: ResponseEnum.NO_SESSION.msg, type: "error" });

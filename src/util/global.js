@@ -7,8 +7,6 @@ ResponseEnum = {
 };
 
 // 用户缓存key
-USER_SESSION_KEY_agentId = "LOGIN_USER_INFO_agentId";
-USER_SESSION_KEY_agentName = "LOGIN_USER_INFO_agentName";
-// 用户缓存过期时间
-USER_SESSION_EXIRE_TIME = 600;
+CURRENT_USER_SESSION_KEY = "current_login_user_info";
+// 当前用户权限
 CURRENT_AGENT_PERMISSION = "current_agent_permission";

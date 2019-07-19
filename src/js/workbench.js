@@ -25,8 +25,16 @@ export default {
     }
   },
   mounted() {
-    this.loginUserName = sessionStorage.getItem(USER_SESSION_KEY_agentName);
-    this.permissionSet = sessionStorage.getItem(CURRENT_AGENT_PERMISSION);
+    // 当前登陆用户名
+    let userInfo = sessionStorage.getItem(CURRENT_USER_SESSION_KEY);
+    if (userInfo && userInfo.length > 0) {
+      this.loginUserName = JSON.parse(userInfo).agentName;
+    }
+    // 权限列表
+    let permissionStr = sessionStorage.getItem(CURRENT_AGENT_PERMISSION);
+    if (permissionStr && permissionStr.length > 0) {
+      this.permissionSet = permissionStr.split(",");
+    }
     debugger;
   }
 };
