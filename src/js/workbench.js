@@ -3,7 +3,8 @@ export default {
     return {
       loginUserName: "",
       sysName: "后台管理系统",
-      collapsed: false
+      collapsed: false,
+      permissionSet: []
     };
   },
   methods: {
@@ -13,7 +14,7 @@ export default {
       this.$confirm("确认退出吗?", "提示", {
         //type: 'warning'
       }).then(() => {
-        sessionStorage.removeItem("user");
+        sessionStorage.removeItem(USER_SESSION_KEY_agentId);
         _this.$router.push("/login");
       })
         .catch(() => { });
@@ -25,5 +26,7 @@ export default {
   },
   mounted() {
     this.loginUserName = sessionStorage.getItem(USER_SESSION_KEY_agentName);
+    this.permissionSet = sessionStorage.getItem(CURRENT_AGENT_PERMISSION);
+    debugger;
   }
 };

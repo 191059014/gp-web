@@ -1,15 +1,11 @@
-import axios from 'axios';
-
-// 创建axios实例
-const service = axios.create({
-    baseURL: process.env.BASE_URL
-})
-
+import service from '../util/axios'
 /**
  * 系统管理
  */
 // 登陆
 export const login = params => { return service.post(`controller/login/login`, params).then(res => res.data); };
+// 当前登陆用户的所有权限
+export const getPermissionSet = () => { return service.get(`controller/login/getPermissionSet`).then(res => res.data); };
 // 分页获取代理商列表
 export const getAgentListPage = (pageNum, pageSize, bodyParam) => { return service.post(`controller/agent/getAgentListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
 // 添加代理商

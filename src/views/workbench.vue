@@ -34,19 +34,22 @@
           router
           v-show="!collapsed"
         >
-          <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-            <el-submenu :index="index+''" v-if="!item.leaf">
-              <template slot="title">
-                <i :class="item.iconCls"></i>
-                {{item.name}}
+          <template v-for="(item,index) in $router.options.routes">
+            <template v-if="!item.hidden">
+              <template v-if="permissionSet && permissionSet.indexOf(item.meta.permissionValue)>0">
+                <el-submenu :index="index+''" :key="index">
+                  <template slot="title">
+                    <i :class="item.iconCls"></i>
+                    {{item.name}}
+                  </template>
+                  <el-menu-item
+                    v-for="child in item.children"
+                    :index="child.path"
+                    :key="child.path"
+                  >{{child.name}}</el-menu-item>
+                </el-submenu>
               </template>
-              <el-menu-item
-                v-for="child in item.children"
-                :index="child.path"
-                :key="child.path"
-                v-if="!child.hidden"
-              >{{child.name}}</el-menu-item>
-            </el-submenu>
+            </template>
           </template>
         </el-menu>
       </aside>

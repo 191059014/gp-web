@@ -1,4 +1,4 @@
-import { login } from '../api/system';
+import { login, getPermissionSet } from '../api/system';
 export default {
   data() {
     return {
@@ -35,8 +35,19 @@ export default {
                 // 将登陆信息放入缓存
                 sessionStorage.setItem(USER_SESSION_KEY_agentId, data.obj.agentId);
                 sessionStorage.setItem(USER_SESSION_KEY_agentName, data.obj.agentName);
-                this.$router.push({ path: "/workbench" });
-                this.$message({ message: msg, type: "success" });
+                // 获取当前用户的权限
+                getPermissionSet().then(res => {
+                  if (res.code == ResponseEnum.SUCCESS.code) {
+                    sessionStorage.setItem(CURRENT_AGENT_PERMISSION, res.obj);
+                    this.$router.push({ path: "/workbench" });
+                    this.$message({ message: msg, type: "success" });
+                  } else {
+                    this.$message({ message: res.msg, type: "error" });
+                  }
+                  debugger;
+                }).catch(err => {
+                  this.$message({ message: '获取当前用户权限失败', type: "error" });
+                });
               } else {
                 this.$message({ message: msg, type: "error" });
               }

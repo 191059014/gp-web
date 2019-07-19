@@ -4,20 +4,11 @@ import Vue from 'vue'
 import store from './vuex/store'
 import App from './App'
 import router from './router'
-import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-// import { getCookie } from '@/util/cookieUtils.js'
 import 'font-awesome/css/font-awesome.min.css'
 import '@/util/global.js';
-
-/**
- * axios相关设置
- */
-axios.defaults.headers.post['Content-Type'] = 'application/json'
-// axios.defaults.headers.common['Authorization'] = store.state.AgentDO.getAgentId
-// axios.defaults.withCredentials = true// 让ajax携带cookie
-Vue.prototype.$axios = axios
+import '@/util/router.js'
 
 Vue.use(ElementUI, { size: 'small' })
 Vue.config.productionTip = false
@@ -30,4 +21,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
 
