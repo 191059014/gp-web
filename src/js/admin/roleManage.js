@@ -42,7 +42,8 @@ export default {
             defaultCheckedKeys: [],
             editPermissionVisible: false,
             editPermissionLoading: false,
-            currentRoleId: ""
+            currentRoleId: "",
+            initStatus: false
         };
     },
     methods: {
@@ -66,7 +67,7 @@ export default {
                     this.roleList = res.obj;
                     this.listLoading = false;
                 } else {
-                    this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+                    this.$message({ message: res.msg, type: 'error' });
                 }
             }).catch(err => {
             });
@@ -157,32 +158,162 @@ export default {
                 }
             });
         },
+        closeAllNode: function () {
+            // 全部节点关闭展开
+            for (var i = 0; i < this.$refs.tree.store._getAllNodes().length; i++) {
+                this.$refs.tree.store._getAllNodes()[i].expanded = false;
+            }
+        },
+        notCheckAllNode: function () {
+            // 全部节点取消选中
+            this.$refs.tree.store.setCheckedKeys([]);
+        },
+        editHandlerCancel: function () {
+            this.editPermissionVisible = false;
+            this.notCheckAllNode();
+            this.closeAllNode();
+        },
         handleEditPermission: function (index, row) {
-            this.defaultCheckedKeys = row.permissionValueSet;
+            if (row.permissionValueSet && row.permissionValueSet.length > 0) {
+                // 如果子节点没有全被选中，则剔除父节点，防止父节点选中导致子节点全选
+                // 组织树
+                var currentPermissionTree = [];
+                // 一级节点
+                for (let i in row.permissionValueSet) {
+                    let permissionValue = row.permissionValueSet[i];
+                    let arrLength = permissionValue.split(":").length;
+                    if (arrLength == 1) {
+                        let firstNode = {};
+                        firstNode.id = permissionValue;
+                        currentPermissionTree.push(firstNode);
+                    }
+                }
+                // 二级节点
+                for (let i in row.permissionValueSet) {
+                    let permissionValue = row.permissionValueSet[i];
+                    let arr = permissionValue.split(":");
+                    let arrLength = arr.length;
+                    if (arrLength == 2) {
+                        for (let j in currentPermissionTree) {
+                            if (arr[0] == currentPermissionTree[j].id) {
+                                let secondNodeArr = currentPermissionTree[j].children;
+                                if (secondNodeArr) {
+                                    let newSecondNode = {};
+                                    newSecondNode.id = permissionValue;
+                                    secondNodeArr.push(newSecondNode);
+                                } else {
+                                    let newSecondNodeArr = [];
+                                    let newSecondNode = {};
+                                    newSecondNode.id = permissionValue;
+                                    newSecondNodeArr.push(newSecondNode);
+                                    currentPermissionTree[j].children = newSecondNodeArr;
+                                }
+                            }
+                        }
+                    }
+                }
+                // 三级节点
+                for (let i in row.permissionValueSet) {
+                    let permissionValue = row.permissionValueSet[i];
+                    let arr = permissionValue.split(":");
+                    let arrLength = arr.length;
+                    if (arrLength == 3) {
+                        let sendcondNodeId = arr[0] + ":" + arr[1];
+                        for (let j in currentPermissionTree) {
+                            if (arr[0] == currentPermissionTree[j].id) {
+                                let secondNodeArr = currentPermissionTree[j].children;
+                                for (let m in secondNodeArr) {
+                                    if (sendcondNodeId == secondNodeArr[m].id) {
+                                        let thirdNodeArr = secondNodeArr[m].children;
+                                        if (thirdNodeArr) {
+                                            let newThirdNode = {};
+                                            newThirdNode.id = permissionValue;
+                                            thirdNodeArr.push(newThirdNode);
+                                        } else {
+                                            let newThirdNodeArr = [];
+                                            let newThirdNode = {};
+                                            newThirdNode.id = permissionValue;
+                                            newThirdNodeArr.push(newThirdNode);
+                                            (currentPermissionTree[j].children)[m].children = newThirdNodeArr;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                debugger;
+                // 对比两个节点
+                let deleteArr = [];
+                for (let i in this.permissionTree) {
+                    for (let j in currentPermissionTree) {
+                        // 比较一级节点的子节点长度
+                        if (this.permissionTree[i].id == currentPermissionTree[j].id) {
+                            let secondChildrenArr = this.permissionTree[i].children;
+                            let secondChildrenArrLength = secondChildrenArr.length;
+                            let currentSecondChildrenArr = currentPermissionTree[j].children;
+                            let currentSecondChildrenArrLength = currentSecondChildrenArr & currentSecondChildrenArr.length | 0;
+                            if (secondChildrenArrLength != currentSecondChildrenArrLength) {
+                                deleteArr.push(this.permissionTree[i].id);
+                            }
+                            // 比较二级节点的子节点长度
+                            for (let m in secondChildrenArr) {
+                                let thirdChildrenArr = secondChildrenArr[m].children;
+                                if (!thirdChildrenArr) {
+                                    continue;
+                                }
+                                let thirdChildrenArrLength = thirdChildrenArr.length;
+                                for (let n in currentSecondChildrenArr) {
+                                    if (secondChildrenArr[m].id == currentSecondChildrenArr[n].id) {
+                                        let currentThirdChildrenArr = currentSecondChildrenArr[n].children;
+                                        if (!currentThirdChildrenArr) {
+                                            continue;
+                                        }
+                                        let currentThirdChildrenArrLength = currentThirdChildrenArr.length;
+                                        if (thirdChildrenArrLength != currentThirdChildrenArrLength) {
+                                            deleteArr.push(secondChildrenArr[m].id);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                debugger;
+                let checkedKeys = [];
+                for (let i in row.permissionValueSet) {
+                    if (deleteArr.indexOf(row.permissionValueSet[i]) < 0) {
+                        checkedKeys.push(row.permissionValueSet[i]);
+                    }
+                }
+                debugger;
+                if (!this.initStatus) {
+                    this.defaultCheckedKeys = checkedKeys;
+                    this.initStatus = true;
+                } else {
+                    this.$refs.tree.store.setCheckedKeys(checkedKeys);
+                }
+            } else {
+                if (!this.initStatus) {
+                    this.defaultCheckedKeys = [];
+                    this.initStatus = true;
+                } else {
+                    this.$refs.tree.store.setCheckedKeys([]);
+                }
+            }
+            debugger;
             this.editPermissionVisible = true;
             this.currentRoleId = row.roleId;
         },
         editPermissionSubmit: function () {
             let checkedKeys = this.$refs.tree.getCheckedKeys();
+            let halfCheckedKeys = this.$refs.tree.getHalfCheckedKeys();
             let permissionArr = [];
             for (let i in checkedKeys) {
-                let permissionValue = checkedKeys[i];
-                let arr = permissionValue.split(":");
-                if (permissionArr.indexOf(arr[0]) < 0) {
-                    permissionArr.push(arr[0]);
-                }
-                if (arr.length > 1) {
-                    let second = arr[0] + ":" + arr[1];
-                    if (permissionArr.indexOf(second) < 0) {
-                        permissionArr.push(second);
-                    }
-                }
-                if (arr.length > 2) {
-                    let third = arr[0] + ":" + arr[1] + ":" + arr[2];
-                    if (permissionArr.indexOf(third) < 0) {
-                        permissionArr.push(third);
-                    }
-                }
+                permissionArr.push(checkedKeys[i]);
+            }
+            for (let i in halfCheckedKeys) {
+                permissionArr.push(halfCheckedKeys[i]);
             }
             batchInsertRolePermission(permissionArr, this.currentRoleId).then(res => {
                 if (res.code == ResponseEnum.SUCCESS.code) {
@@ -192,7 +323,8 @@ export default {
                 } else {
                     this.$message({ message: res.msg, type: 'error' });
                 }
-            })
+            });
+            this.closeAllNode();
         },
         loadPermissionTree: function () {
             let routes = this.$router.options.routes;

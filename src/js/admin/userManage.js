@@ -50,7 +50,8 @@ export default {
       defaultCheckedKeys: [],
       editRoleVisible: false,
       editRoleLoading: false,
-      currentAgentId: ""
+      currentAgentId: "",
+      initStatus: false
     };
   },
   methods: {
@@ -184,8 +185,22 @@ export default {
         .then(() => { })
         .catch(() => { });
     },
-    handleRole: function (index, row) {
-      this.defaultCheckedKeys=row.roleIdSet;
+    editRole: function (index, row) {
+      if (row.roleIdSet && row.roleIdSet.length > 0) {
+        if (!this.initStatus) {
+          this.defaultCheckedKeys = row.roleIdSet;
+          this.initStatus = true;
+        } else {
+          this.$refs.tree.store.setCheckedKeys(row.roleIdSet);
+        }
+      } else {
+        if (!this.initStatus) {
+          this.defaultCheckedKeys = [];
+          this.initStatus = true;
+        } else {
+          this.$refs.tree.store.setCheckedKeys([]);
+        }
+      }
       this.editRoleVisible = true;
       this.currentAgentId = row.agentId;
     },

@@ -42,11 +42,11 @@
                     <i :class="item.iconCls"></i>
                     {{item.name}}
                   </template>
-                  <el-menu-item
-                    v-for="child in item.children"
-                    :index="child.path"
-                    :key="child.path"
-                  >{{child.name}}</el-menu-item>
+                  <template v-for="child in item.children">
+                    <template v-if="permissionSet && permissionSet.indexOf(child.meta.permissionValue)>-1">
+                      <el-menu-item :index="child.path" :key="child.path">{{child.name}}</el-menu-item>
+                    </template>
+                  </template>
                 </el-submenu>
               </template>
             </template>

@@ -1,7 +1,7 @@
-import Vue from 'vue'
 import axios from 'axios'
+import { Message } from 'element-ui';
+import router from '../router/index'
 
-Vue.use(axios)
 /**
  * axios相关设置
  */
@@ -32,7 +32,7 @@ service.interceptors.request.use(function (config) {
 // 响应拦截（配置请求回来的信息）
 service.interceptors.response.use(function (response) {
     if (response.data.code == ResponseEnum.NO_SESSION.code) {
-        Message({ message: ResponseEnum.NO_SESSION.msg, type: "error" });
+        Message({ message: ResponseEnum.NO_SESSION.msg, type: 'error' });
         router.replace({
             path: '/login',
             query: { redirect: router.currentRoute.fullPath }
@@ -41,7 +41,6 @@ service.interceptors.response.use(function (response) {
     }
     return response;
 }, function (error) {
-    debugger;
     Message({ message: ResponseEnum.ERROR.msg, type: "error" });
     // 处理响应失败
     return Promise.reject(error);

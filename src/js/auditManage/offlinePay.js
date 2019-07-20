@@ -1,4 +1,4 @@
-import { getOfflinePayStatusCombobox, getOfflineCheckStatusCombobox, getOfflinePayChannelCombobox, getOfflinePayListPage, updateOfflinePay } from '../../api/system';
+import { getOfflinePayStatusCombobox, getOfflineCheckStatusCombobox, getOfflinePayChannelCombobox, getOfflinePayListPage, updateOfflinePay, getFundTypeCombobox } from '../../api/system';
 export default {
     data() {
         return {
@@ -9,6 +9,7 @@ export default {
             payStatusList: [],
             payChannelList: [],
             checkStatusList: [],
+            fundTypeList: [],
             total: 0,
             pageNum: 1,
             pageSize: 10,
@@ -43,6 +44,11 @@ export default {
         getOfflinePayChannelCombobox: function () {
             getOfflinePayChannelCombobox().then(res => {
                 this.payChannelList = res.obj;
+            })
+        },
+        getFundTypeCombobox: function () {
+            getFundTypeCombobox().then(res => {
+                this.fundTypeList = res.obj;
             })
         },
         handleSizeChange(val) {
@@ -85,6 +91,14 @@ export default {
                 }
             }
             return row.payStatus;
+        },
+        formatFundType: function (row, cloum) {
+            for (let i in this.fundTypeList) {
+                if (row.fundType == this.fundTypeList[i].value) {
+                    return this.fundTypeList[i].name;
+                }
+            }
+            return row.fundType;
         },
         queryList: function () {
             let bodyParam = {
@@ -131,6 +145,7 @@ export default {
         this.getOfflinePayStatusCombobox();
         this.getOfflineCheckStatusCombobox();
         this.getOfflinePayChannelCombobox();
+        this.getFundTypeCombobox();
         this.queryList();
     }
 

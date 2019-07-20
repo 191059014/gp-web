@@ -7,6 +7,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.min.css'
+import axios from './util/axios'
 import '@/util/global.js';
 import '@/util/router.js'
 
@@ -18,6 +19,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  axios,
   components: { App },
   template: '<App/>'
 })

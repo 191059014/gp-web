@@ -45,6 +45,7 @@
       <el-table-column prop="happenMoney" label="发生金额" style="width:5%"></el-table-column>
       <el-table-column prop="payChannel" label="支付渠道" style="width:8%" :formatter="formatPayChannel"></el-table-column>
       <el-table-column prop="payStatus" label="支付状态" style="width:15%" :formatter="formatPayStatus"></el-table-column>
+      <el-table-column prop="fundType" label="资金类型" style="width:15%" :formatter="formatFundType"></el-table-column>
       <el-table-column prop="checkStatus" label="审核状态" style="width:8%" :formatter="formatCheckStatus"></el-table-column>
       <el-table-column prop="remark" label="备注" style="width:10%"></el-table-column>
       <el-table-column prop="systemRemark" label="管理员备注" style="width:10%"></el-table-column>

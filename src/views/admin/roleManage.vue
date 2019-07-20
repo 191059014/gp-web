@@ -89,9 +89,10 @@
         show-checkbox
         node-key="id"
         ref="tree"
+        highlight-current
       ></el-tree>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="editPermissionVisible = false">取 消</el-button>
+        <el-button @click="editHandlerCancel">取 消</el-button>
         <el-button type="primary" @click="editPermissionSubmit" :loading="editPermissionLoading">确 定</el-button>
       </div>
     </el-dialog>

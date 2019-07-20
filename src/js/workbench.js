@@ -14,7 +14,7 @@ export default {
       this.$confirm("确认退出吗?", "提示", {
         //type: 'warning'
       }).then(() => {
-        sessionStorage.removeItem(USER_SESSION_KEY_agentId);
+        sessionStorage.removeItem(CURRENT_USER_SESSION_KEY);
         _this.$router.push("/login");
       })
         .catch(() => { });
@@ -35,6 +35,5 @@ export default {
     if (permissionStr && permissionStr.length > 0) {
       this.permissionSet = permissionStr.split(",");
     }
-    debugger;
   }
 };
