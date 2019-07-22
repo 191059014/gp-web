@@ -86,3 +86,8 @@ export const getCustomerFundDetailListPage = (pageNum, pageSize, bodyParam) => {
 export const getOrderListPage = (pageNum, pageSize, bodyParam) => { return service.post(`controller/order/getOrderListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
 // 订单状态
 export const getOrderStatusCombobox = () => { return service.get(`controller/order/getOrderStatusCombobox`).then(res => res.data); };
+
+/**
+ * 结算管理
+ */
+export const exportAgentReport = (pageNum, pageSize, bodyParam) => { return service.post(`controller/agentReport/exportAgentReport?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
