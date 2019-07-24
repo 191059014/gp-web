@@ -1,4 +1,7 @@
 import service from '../util/axios'
+import { Message } from 'element-ui';
+import { dataUtils } from '../util/date';
+
 /**
  * 系统管理
  */
@@ -90,4 +93,27 @@ export const getOrderStatusCombobox = () => { return service.get(`controller/ord
 /**
  * 结算管理
  */
-export const exportAgentReport = (pageNum, pageSize, bodyParam) => { return service.post(`controller/agentReport/exportAgentReport?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
+// 导出报表
+export const exportExcel = (url, bodyParam, name) => {
+    return service.post(url, bodyParam, { responseType: 'blob' }).then(res => {
+        debugger;
+        const blob = new Blob([res.data], { type: "application/vnd.ms-excel;charset=utf-8" });
+        let data = dataUtils.formatDate(new Date, 'yyyyMMdd');
+        // 文件名称
+        const fileName = name + "_" + data + '.xls';
+        const linkNode = document.createElement('a');
+        // a标签的download属性规定下载文件的名称
+        linkNode.download = fileName;
+        linkNode.style.display = 'none';
+        linkNode.href = URL.createObjectURL(blob);
+        document.body.appendChild(linkNode);
+        // 模拟点击
+        linkNode.click();
+        // 释放URL对象
+        URL.revokeObjectURL(linkNode.href);
+        document.body.removeChild(linkNode);
+        Message({ message: name + '下载成功', type: 'success' });
+    }).catch(error => {
+        Message({ message: name + '下载失败', type: 'error' });
+    })
+}

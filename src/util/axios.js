@@ -6,12 +6,11 @@ import router from '../router/index'
  * axios相关设置
  */
 axios.defaults.headers.post['Content-Type'] = 'application/json'
-// axios.defaults.headers.common['Authorization'] = store.state.AgentDO.getAgentId
-// axios.defaults.withCredentials = true// 让ajax携带cookie
 
 // 创建axios实例
 const service = axios.create({
-    baseURL: process.env.BASE_URL
+    baseURL: '/api',
+    timeout: 30000
 })
 
 // 请求拦截（配置发送请求的信息）

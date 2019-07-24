@@ -1,4 +1,4 @@
-import { getAgentListPage, getAgentLevelCombobox, getRealAuthStatusCombobox, exportAgentReport } from '../../api/system';
+import { getAgentListPage, getAgentLevelCombobox, getRealAuthStatusCombobox, exportExcel } from '../../api/system';
 
 export default {
     data() {
@@ -57,7 +57,6 @@ export default {
             let bodyParam = {};
             let pageNum = 0;
             let pageSize = 0;
-            debugger;
             if (type == 0) {
                 // 导出当前页
                 bodyParam = {
@@ -67,8 +66,8 @@ export default {
                 pageNum = this.pageNum;
                 pageSize = this.pageSize;
             }
-            exportAgentReport(pageNum, pageSize, bodyParam);
-            debugger;
+            let url = 'controller/agentReport/exportAgentReport?pageNum=' + pageNum + '&pageSize=' + pageSize;
+            exportExcel(url, bodyParam, '代理商报表');
         },
         //获取用户列表
         queryAgentListPage() {

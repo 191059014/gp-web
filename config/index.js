@@ -10,7 +10,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: 'http://localhost:8090/',  // 接口域名
+        changeOrigin: true,  //是否跨域
+        pathRewrite: {
+          '^/api': ''   // 将前缀 '/api' 转为 '/'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -48,7 +56,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: 'http://192.168.17.128:8090/',  // 接口域名
+        changeOrigin: true,  //是否跨域
+        pathRewrite: {
+          '^/api': ''   // 将前缀 '/api' 转为 '/'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
