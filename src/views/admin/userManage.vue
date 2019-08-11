@@ -29,14 +29,14 @@
       @selection-change="selsChange"
       style="width: 100%;"
     >
-      <el-table-column type="selection" style="width:10%"></el-table-column>
-      <el-table-column type="index" style="width:10%"></el-table-column>
-      <el-table-column prop="agentId" label="用户ID" style="width:10%" sortable></el-table-column>
-      <el-table-column prop="agentName" label="姓名" style="width:10%" sortable></el-table-column>
-      <el-table-column prop="mobile" label="手机号" style="width:10%" sortable></el-table-column>
-      <el-table-column prop="createTime" label="创建时间" style="width:15%" sortable></el-table-column>
-      <el-table-column prop="updateTime" label="更新时间" style="width:15%" sortable></el-table-column>
-      <el-table-column label="操作" style="width:20%">
+      <el-table-column type="selection" :span="2"></el-table-column>
+      <el-table-column type="index" :span="2"></el-table-column>
+      <el-table-column prop="agentId" label="用户ID" :span="2" sortable></el-table-column>
+      <el-table-column prop="agentName" label="姓名" :span="2" sortable></el-table-column>
+      <el-table-column prop="mobile" label="手机号" :span="2" sortable></el-table-column>
+      <el-table-column prop="createTime" label="创建时间" :span="2" sortable></el-table-column>
+      <el-table-column prop="updateTime" label="更新时间" :span="2" sortable></el-table-column>
+      <el-table-column label="操作" :span="2">
         <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
