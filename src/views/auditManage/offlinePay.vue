@@ -43,16 +43,30 @@
       <el-table-column prop="userName" label="客户名称" style="width:8%"></el-table-column>
       <el-table-column prop="mobile" label="客户手机" style="width:8%"></el-table-column>
       <el-table-column prop="happenMoney" label="发生金额" style="width:5%"></el-table-column>
-      <el-table-column prop="payChannel" label="支付渠道" style="width:8%" :formatter="formatPayChannel"></el-table-column>
+      <el-table-column
+        prop="payChannel"
+        label="支付渠道"
+        style="width:8%"
+        :formatter="formatPayChannel"
+      ></el-table-column>
       <el-table-column prop="payStatus" label="支付状态" style="width:15%" :formatter="formatPayStatus"></el-table-column>
       <el-table-column prop="fundType" label="资金类型" style="width:15%" :formatter="formatFundType"></el-table-column>
-      <el-table-column prop="checkStatus" label="审核状态" style="width:8%" :formatter="formatCheckStatus"></el-table-column>
+      <el-table-column
+        prop="checkStatus"
+        label="审核状态"
+        style="width:8%;"
+        :formatter="formatCheckStatus"
+      ></el-table-column>
       <el-table-column prop="remark" label="备注" style="width:10%"></el-table-column>
       <el-table-column prop="systemRemark" label="管理员备注" style="width:10%"></el-table-column>
       <el-table-column prop="createTime" label="创建时间" style="width:10%"></el-table-column>
       <el-table-column label="操作" style="width:20%">
         <template slot-scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button
+            size="small"
+            :type="scope.row.checkStatus==0?'danger':'success'"
+            @click="handleEdit(scope.$index, scope.row)"
+          >编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -70,7 +84,7 @@
       ></el-pagination>
     </el-col>
 
-<!--编辑界面-->
+    <!--编辑界面-->
     <el-dialog title="修改" :visible.sync="editFormVisible">
       <el-form :model="editForm" :rules="editFormRules" ref="editForm">
         <el-form-item label="审核ID" :label-width="editFormLabelWidth" style="display:none;">
@@ -95,7 +109,6 @@
         <el-button type="primary" @click="editSubmit" :loading="editLoading">确定修改</el-button>
       </div>
     </el-dialog>
-
   </section>
 </template>
 

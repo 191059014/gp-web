@@ -131,7 +131,7 @@ export default {
                             this.editFormVisible = false;
                             this.queryList();
                         } else {
-                            this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+                            this.$message({ message: res.msg, type: 'error' });
                         }
                     }).catch(err => {
                         this.editLoading = false;
