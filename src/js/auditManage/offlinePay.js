@@ -53,9 +53,11 @@ export default {
         },
         handleSizeChange(val) {
             this.pageSize = val;
+            this.queryList();
         },
         handleCurrentChange(val) {
             this.pageNum = val;
+            this.queryList();
         },
         //显示编辑界面
         handleEdit: function (index, row) {
