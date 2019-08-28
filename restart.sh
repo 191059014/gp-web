@@ -6,7 +6,7 @@ then
    kill -9 $pid
 fi
 echo "start gp-web..."
-nohup cnpm run dev > nohup.out 2>&1 &
+nohup cnpm run dev > nohup.out &
 tail -f nohup.out
 
 # 如果脚本不能正常执行，请参考下面：
