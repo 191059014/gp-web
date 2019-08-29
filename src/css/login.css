@@ -16,3 +16,9 @@
     text-align: center;
     color: #505458;
   }
+
+@media screen and(max-width: 700px){ 
+  .login-container {
+      width: 300px;
+  }
+} 
