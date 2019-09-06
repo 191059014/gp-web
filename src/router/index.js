@@ -17,6 +17,7 @@ import alreadySettledReport from '@/views/settleAccountManage/alreadySettledRepo
 import customerReport from '@/views/settleAccountManage/customerReport'
 import holdAPositionReport from '@/views/settleAccountManage/holdAPositionReport'
 import operationReport from '@/views/settleAccountManage/operationReport'
+import stockManage from '@/views/admin/stockManage'
 
 Vue.use(Router)
 
@@ -79,6 +80,20 @@ export const constantRouterMap = [
           permissionValue: 'sys:permission',
           operators: [
             { permissionName: '修改', sourceType: '2', permissionValue: 'sys:permission:update' }
+          ]
+        }
+      },
+      {
+        path: '/stockManage',
+        component: stockManage,
+        name: '股票管理',
+        meta: {
+          sourceType: '1',
+          permissionValue: 'sys:stock',
+          operators: [
+            { permissionName: '新增', sourceType: '2', permissionValue: 'sys:stock:add' },
+            { permissionName: '修改', sourceType: '2', permissionValue: 'sys:stock:update' },
+            { permissionName: '删除', sourceType: '2', permissionValue: 'sys:stock:delete' }
           ]
         }
       }

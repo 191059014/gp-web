@@ -43,7 +43,16 @@ export const getSourceTypeCombobox = () => { return service.get(`controller/perm
 export const findRoleTree = () => { return service.get(`controller/role/findRoleTree`).then(res => res.data); };
 // 批量导入代理商角色关系
 export const batchInsertAgentRole = (bodyParam, agentId) => { return service.post(`controller/agentRole/batchInsert?agentId=` + agentId, bodyParam).then(res => res.data); };
-
+// 分页获取股票列表
+export const getStockListPage = (pageNum, pageSize, bodyParam) => { return service.post(`controller/stock/getStockListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
+// 添加股票
+export const addStock = params => { return service.post(`controller/stock/addStock`, params).then(res => res.data); };
+// 修改股票
+export const updateStock = params => { return service.post(`controller/stock/updateStock`, params).then(res => res.data); };
+// 删除股票
+export const deleteStockById = id => { return service.get(`controller/stock/deleteStockById?id=` + id).then(res => res.data); };
+// 获取股票状态下拉框
+export const getStockStatusCombobox = () => { return service.get(`controller/stock/getStockStatusCombobox`).then(res => res.data); };
 /**
  * 审核管理
  */
