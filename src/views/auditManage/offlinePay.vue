@@ -64,9 +64,10 @@
         <template slot-scope="scope">
           <el-button
             size="small"
-            :type="scope.row.checkStatus==0?'danger':'success'"
+            :type="scope.row.checkStatus==1?'danger':'success'"
+            :disabled="scope.row.checkStatus==1?false:true"
             @click="handleEdit(scope.$index, scope.row)"
-          >编辑</el-button>
+          >{{scope.row.checkStatus==1?'待处理':'已完成'}}</el-button>
         </template>
       </el-table-column>
     </el-table>
