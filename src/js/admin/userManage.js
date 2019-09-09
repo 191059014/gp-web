@@ -13,7 +13,6 @@ export default {
       pageSize: 10,
       listLoading: false,
       sels: [], //列表选中列
-      primaryPassword: "",
 
       editFormVisible: false, //编辑界面是否显示
       editLoading: false,
@@ -27,7 +26,6 @@ export default {
       editForm: {
         agentId: "",
         agentName: "",
-        password: "",
         mobile: ""
       },
 
@@ -44,7 +42,8 @@ export default {
         agentName: "",
         password: "",
         confirmPassword: "",
-        mobile: ""
+        mobile: "",
+        unit: ""
       },
       roleTree: [],
       defaultCheckedKeys: [],
@@ -112,7 +111,6 @@ export default {
     handleEdit: function (index, row) {
       this.editFormVisible = true;
       this.editForm = Object.assign({}, row);
-      this.primaryPassword = row.password;
     },
     //显示新增界面
     handleAdd: function () {
@@ -121,7 +119,8 @@ export default {
         agentName: "",
         password: "",
         confirmPassword: "",
-        mobile: ""
+        mobile: "",
+        unit: ""
       }
     },
     //编辑
@@ -130,9 +129,6 @@ export default {
         if (valid) {
           this.editLoading = true;
           let bodyParam = Object.assign({}, this.editForm);
-          if (this.primaryPassword == this.editForm.password) {
-            bodyParam.password = null;
-          }
           updateAgent(bodyParam).then((res) => {
             if (res.code == ResponseEnum.SUCCESS.code) {
               this.editLoading = false;
@@ -149,6 +145,9 @@ export default {
           });
         }
       });
+    },
+    checkNumber: function (unit) {
+      this.addForm.unit = unit.match( /^[1-9]\d*$/) || null
     },
     //新增
     addSubmit: function () {

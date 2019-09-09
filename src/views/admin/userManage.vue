@@ -29,11 +29,9 @@
       @selection-change="selsChange"
       style="width: 100%;"
     >
-      <el-table-column type="selection" :span="2"></el-table-column>
-      <el-table-column type="index" :span="2"></el-table-column>
-      <el-table-column prop="agentId" label="用户ID" :span="2" sortable></el-table-column>
       <el-table-column prop="agentName" label="姓名" :span="2" sortable></el-table-column>
       <el-table-column prop="mobile" label="手机号" :span="2" sortable></el-table-column>
+      <el-table-column prop="unit" label="代理商编制" :span="2" sortable></el-table-column>
       <el-table-column prop="createTime" label="创建时间" :span="2" sortable></el-table-column>
       <el-table-column prop="updateTime" label="更新时间" :span="2" sortable></el-table-column>
       <el-table-column label="操作" :span="2">
@@ -68,9 +66,6 @@
         <el-form-item label="用户名" :label-width="editFormLabelWidth">
           <el-input v-model="editForm.agentName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" :label-width="editFormLabelWidth">
-          <el-input v-model="editForm.password" autocomplete="off" show-password></el-input>
-        </el-form-item>
         <el-form-item label="手机号" :label-width="addFormLabelWidth">
           <el-input v-model="editForm.mobile" autocomplete="off"></el-input>
         </el-form-item>
@@ -95,6 +90,9 @@
         </el-form-item>
         <el-form-item label="手机号" :label-width="addFormLabelWidth">
           <el-input v-model="addForm.mobile" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="代理商编号" :label-width="addFormLabelWidth">
+          <el-input v-model="addForm.unit" @input="checkNumber(addForm.unit)" autocomplete="off" placeholder="如果新增二级代理商，则需填写"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -53,6 +53,14 @@ export const updateStock = params => { return service.post(`controller/stock/upd
 export const deleteStockById = id => { return service.get(`controller/stock/deleteStockById?id=` + id).then(res => res.data); };
 // 获取股票状态下拉框
 export const getStockStatusCombobox = () => { return service.get(`controller/stock/getStockStatusCombobox`).then(res => res.data); };
+// 修改密码
+export const updatePasswrod = bodyParam => { return service.post(`controller/agent/updatePasswrod`, bodyParam).then(res => res.data); };
+// 实名认证
+export const realNameAuth = bodyParam => { return service.post(`controller/agent/realNameAuth`, bodyParam).then(res => res.data); };
+// 绑定银行卡
+export const bindBankCard = bodyParam => { return service.post(`controller/agent/bindBankCard`, bodyParam).then(res => res.data); };
+// 余额提取
+export const balancesExtracted = extractedMoney => { return service.get(`controller/agent/balancesExtracted?extractedMoney=` + extractedMoney).then(res => res.data); };
 /**
  * 审核管理
  */
