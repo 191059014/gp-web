@@ -110,6 +110,10 @@ export const getOrderStatusCombobox = () => { return service.get(`controller/ord
 /**
  * 结算管理
  */
+// 持仓中订单分页查询
+export const findHoldReportPages = (pageNum, pageSize, bodyParam) => { return service.post(`controller/holdReport/findHoldReportPages?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
+// 已结算订单分页查询
+export const findAlreadySettledReportPages = (pageNum, pageSize, bodyParam) => { return service.post(`controller/alreadySettledReport/findAlreadySettledReportPages?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
 // 导出报表
 export const exportExcel = (url, bodyParam, name) => {
     return service.post(url, bodyParam, { responseType: 'blob' }).then(res => {
