@@ -43,7 +43,7 @@ export default {
         password: "",
         confirmPassword: "",
         mobile: "",
-        unit: ""
+        unit: null
       },
       roleTree: [],
       defaultCheckedKeys: [],
@@ -120,7 +120,7 @@ export default {
         password: "",
         confirmPassword: "",
         mobile: "",
-        unit: ""
+        unit: null
       }
     },
     //编辑
@@ -147,7 +147,8 @@ export default {
       });
     },
     checkNumber: function (unit) {
-      this.addForm.unit = unit.match( /^[1-9]\d*$/) || null
+      let unitArr = unit.match(/^[1-9]\d*$/) || null;
+      this.addForm.unit = unitArr & unitArr[0] | null;
     },
     //新增
     addSubmit: function () {
@@ -155,6 +156,22 @@ export default {
         if (valid) {
           this.addLoading = true;
           let bodyParam = Object.assign({}, this.addForm);
+          if (!bodyParam.agentName) {
+            this.$message({ message: '请输入代理商姓名', type: 'error' });
+            return false;
+          }
+          if (!bodyParam.password) {
+            this.$message({ message: '请输入密码', type: 'error' });
+            return false;
+          }
+          if (!bodyParam.confirmPassword) {
+            this.$message({ message: '请输入确认密码', type: 'error' });
+            return false;
+          }
+          if (bodyParam.password != bodyParam.confirmPassword) {
+            this.$message({ message: '两次密码输入不一致', type: 'error' });
+            return false;
+          }
           delete bodyParam.confirmPassword;
           addAgent(bodyParam).then((res) => {
             if (res.code == ResponseEnum.SUCCESS.code) {

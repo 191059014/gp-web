@@ -63,6 +63,7 @@
       <el-table-column label="操作" style="width:20%">
         <template slot-scope="scope">
           <el-button
+            v-if="!scope.row.unit"
             size="small"
             :type="scope.row.checkStatus==1?'danger':'success'"
             :disabled="scope.row.checkStatus==1?false:true"
