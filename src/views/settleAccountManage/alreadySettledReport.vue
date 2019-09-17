@@ -37,7 +37,6 @@
 
     <!--列表-->
     <el-table :data="orderList" highlight-current-row v-loading="listLoading" style="width: 100%;">
-      <el-table-column label="订单ID" prop="order.orderId" style="width:6%"> </el-table-column>
       <el-table-column label="客户姓名" style="width:5%">
         <el-table-column
           label="手机号"
@@ -52,19 +51,33 @@
           :formatter="formatStockCodeAndStockName"
         ></el-table-column>
       </el-table-column>
-      <el-table-column label="买入时间" prop="order.buyTime" style="width:5%"> </el-table-column>
-      <el-table-column label="买入股数" style="width:5%">
-        <el-table-column
-          label="买入价格"
-          style="width:6%"
-          :formatter="formatBuyNumberAndBuyPrice"
-        ></el-table-column>
-      </el-table-column>
       <el-table-column label="策略本金" style="width:5%">
         <el-table-column
           label="策略金额"
           style="width:6%"
           :formatter="formatStrategyOwnMoneyAndStrategyMoney"
+        ></el-table-column>
+      </el-table-column>
+      <el-table-column label="买入时间" style="width:5%">
+        <el-table-column
+          label="卖出时间"
+          style="width:6%"
+          :formatter="formatBuyTimeAndSellTime"
+        ></el-table-column>
+      </el-table-column>
+      <el-table-column prop="order.buyNumber" label="买入股数" style="width:5%"></el-table-column>
+      <el-table-column label="买入价格" style="width:5%">
+        <el-table-column
+          label="卖出价格"
+          style="width:6%"
+          :formatter="formatBuyBuyPriceAndSellPrice"
+        ></el-table-column>
+      </el-table-column>
+      <el-table-column label="利润" style="width:5%">
+        <el-table-column
+          label="盈亏率"
+          style="width:6%"
+          :formatter="formatProfitAndProfitRate"
         ></el-table-column>
       </el-table-column>
       <el-table-column label="止盈价格" style="width:5%">
@@ -86,13 +99,6 @@
           label="递延到期时间"
           style="width:6%"
           :formatter="formatAlreadyDelayDaysAndDelayEndTime"
-        ></el-table-column>
-      </el-table-column>
-      <el-table-column label="利润" style="width:5%">
-        <el-table-column
-          label="盈亏率"
-          style="width:6%"
-          :formatter="formatProfitAndProfitRate"
         ></el-table-column>
       </el-table-column>
     </el-table>

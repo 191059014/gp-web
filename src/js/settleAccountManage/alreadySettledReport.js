@@ -50,8 +50,11 @@ export default {
         formatStockCodeAndStockName(row, column) {
             return row.order.stockCode + '\n' + row.order.stockName;
         },
-        formatBuyNumberAndBuyPrice(row, column) {
-            return row.order.buyNumber + '\n' + row.order.buyPrice;
+        formatBuyBuyPriceAndSellPrice(row, column) {
+            return row.order.buyPrice + '\n' + row.order.sellPrice;
+        },
+        formatBuyTimeAndSellTime(row, column) {
+            return row.order.buyTime + '\n' + row.order.sellTime;
         },
         formatStrategyOwnMoneyAndStrategyMoney(row, column) {
             return row.order.strategyOwnMoney + '\n' + row.order.strategyMoney;

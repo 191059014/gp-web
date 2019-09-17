@@ -4,8 +4,7 @@ export default {
     data() {
         return {
             filters: {
-                userName: "",
-                orderStatus: ""
+                userName: ""
             },
             orderList: [],
             total: 0,
@@ -31,14 +30,8 @@ export default {
         formatBuyPriceAndBuyPriceTotal(row, column) {
             return row.buyPrice + '\n' + row.buyPriceTotal;
         },
-        formatSellPriceAndSellPriceTotal(row, column) {
-            return row.sellPrice + '\n' + row.sellPriceTotal;
-        },
         formatStrategyOwnMoneyAndStrategyMoney(row, column) {
             return row.strategyOwnMoney + '\n' + row.strategyMoney;
-        },
-        formatProfitAndProfitRate(row, column) {
-            return row.profit + '\n' + row.profitRate;
         },
         formatStopEarnMoneyAndStopLossMoney(row, column) {
             return row.stopEarnMoney + '\n' + row.stopLossMoney;
@@ -65,8 +58,7 @@ export default {
         //获取订单列表
         queryOrderListPage() {
             let bodyParam = {
-                userName: this.filters.userName,
-                orderStatus: this.filters.orderStatus
+                userName: this.filters.userName
             };
             this.listLoading = true;
             getOrderListPage(this.pageNum, this.pageSize, bodyParam).then((res) => {
@@ -82,8 +74,7 @@ export default {
         },
         handleReset: function () {
             this.filters = {
-                userName: "",
-                orderStatus: ""
+                userName: ""
             }
         },
         selsChange: function (sels) {

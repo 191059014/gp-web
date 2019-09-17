@@ -6,16 +6,6 @@
         <el-form-item>
           <el-input v-model="filters.userName" placeholder="客户姓名"></el-input>
         </el-form-item>
-        <el-form-item label="订单状态">
-          <el-select v-model="filters.orderStatus" placeholder="请选择订单状态">
-            <el-option
-              v-for="item in orderStatusList"
-              :key="item.value"
-              :label="item.name"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="queryOrderListPage">查询</el-button>
         </el-form-item>
@@ -52,28 +42,12 @@
           :formatter="formatBuyPriceAndBuyPriceTotal"
         ></el-table-column>
       </el-table-column>
-      <el-table-column prop="sellPrice" label="卖出价格" style="width:5%">
-        <el-table-column
-          prop="sellPriceTotal"
-          label="卖出总价格"
-          style="width:6%"
-          :formatter="formatSellPriceAndSellPriceTotal"
-        ></el-table-column>
-      </el-table-column>
       <el-table-column prop="strategyOwnMoney" label="策略本金" style="width:5%">
         <el-table-column
           prop="strategyMoney"
           label="策略金额"
           style="width:6%"
           :formatter="formatStrategyOwnMoneyAndStrategyMoney"
-        ></el-table-column>
-      </el-table-column>
-      <el-table-column prop="profit" label="利润" style="width:5%">
-        <el-table-column
-          prop="profitRate"
-          label="盈亏率"
-          style="width:6%"
-          :formatter="formatProfitAndProfitRate"
         ></el-table-column>
       </el-table-column>
       <el-table-column prop="stopEarnMoney" label="止盈价格" style="width:5%">
@@ -87,18 +61,13 @@
       <el-table-column prop="serviceMoney" label="信息服务费" style="width:5%">
         <el-table-column prop="delayMoney" label="递延金" style="width:6%" :formatter="formatServiceMoneyAndDelayMoney"></el-table-column>
       </el-table-column>
+      <el-table-column prop="buyTime" label="买入时间" style="width:5%"></el-table-column>
       <el-table-column
         prop="orderStatus"
         label="订单状态"
         style="width:5%"
         :formatter="formatOrderStatus"
       ></el-table-column>
-      <el-table-column label="操作" style="width:20%">
-        <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <!-- <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button> -->
-        </template>
-      </el-table-column>
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
