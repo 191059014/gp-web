@@ -58,6 +58,9 @@ export default {
     collapse: function () {
       this.collapsed = !this.collapsed;
     },
+    clickMenu: function () {
+      clearInterval(this.$store.state.riskControlTimer);
+    },
     handleCommand: function (command) {
       if (command == 'updatePassword') {
         this.updatePasswordFormVisible = true;

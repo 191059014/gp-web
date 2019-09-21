@@ -1,6 +1,7 @@
 import service from '../util/axios'
 import { Message } from 'element-ui';
 import { dataUtils } from '../util/date';
+import axios from 'axios'
 
 /**
  * 系统管理
@@ -106,6 +107,8 @@ export const getCustomerFundDetailListPage = (pageNum, pageSize, bodyParam) => {
 export const getOrderListPage = (pageNum, pageSize, bodyParam) => { return service.post(`controller/order/getOrderListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
 // 订单状态
 export const getOrderStatusCombobox = () => { return service.get(`controller/order/getOrderStatusCombobox`).then(res => res.data); };
+// 实时风控
+export const riskControl = bodyParam => { return axios.post(`/batchApi/controller/riskController/calcProfitCurrentTime`, bodyParam).then(res => res.data); };
 
 /**
  * 结算管理

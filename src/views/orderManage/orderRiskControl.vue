@@ -62,12 +62,8 @@
         <el-table-column prop="delayMoney" label="递延金" style="width:6%" :formatter="formatServiceMoneyAndDelayMoney"></el-table-column>
       </el-table-column>
       <el-table-column prop="buyTime" label="买入时间" style="width:5%"></el-table-column>
-      <el-table-column
-        prop="orderStatus"
-        label="订单状态"
-        style="width:5%"
-        :formatter="formatOrderStatus"
-      ></el-table-column>
+      <el-table-column prop="currentPrice" label="当前价格" style="width:5%"></el-table-column>
+      <el-table-column prop="profit" label="浮动盈亏" style="width:5%"></el-table-column>
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">

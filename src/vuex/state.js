@@ -1,10 +1,7 @@
 // 应用初始状态
 const state = {
-    AgentDO: {
-        agentId: '',
-        agentName: '',
-        password: ''
-    }
+    // 风控定时任务
+    riskControlTimer: ''
 }
 
 export default state

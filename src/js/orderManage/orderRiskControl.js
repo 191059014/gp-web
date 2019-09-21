@@ -1,4 +1,5 @@
-import { getOrderListPage, getOrderStatusCombobox } from '../../api/system';
+import { getOrderListPage, getOrderStatusCombobox, riskControl } from '../../api/system';
+import store from '../../vuex/store'
 
 export default {
     data() {
@@ -12,15 +13,16 @@ export default {
             pageSize: 10,
             listLoading: false,
             sels: [], //列表选中列
-            orderStatusList: []
+            // orderStatusList: [],
+            // riskControlTimer: store.state.riskControlTimer
         };
     },
     methods: {
-        getOrderStatusList() {
-            getOrderStatusCombobox().then(res => {
-                this.orderStatusList = res.obj;
-            })
-        },
+        // getOrderStatusList() {
+        //     getOrderStatusCombobox().then(res => {
+        //         this.orderStatusList = res.obj;
+        //     })
+        // },
         formatUserNameAndMobile(row, column) {
             return row.userName + '\n' + row.mobile;
         },
@@ -39,14 +41,25 @@ export default {
         formatServiceMoneyAndDelayMoney(row, column) {
             return row.serviceMoney + '\n' + row.delayMoney;
         },
-        formatOrderStatus(row, column) {
-            for (let i in this.orderStatusList) {
-                if (row.orderStatus == this.orderStatusList[i].value) {
-                    return this.orderStatusList[i].name;
-                }
+        formatCurrentPriceAndProfit(row, column) {
+            let currentPrice = row.currentPrice;
+            if (!currentPrice) {
+                currentPrice = 0
             }
-            return row.orderStatus;
+            let profit = row.profit;
+            if (!profit) {
+                profit = 0
+            }
+            return currentPrice + '\n' + profit;
         },
+        // formatOrderStatus(row, column) {
+        //     for (let i in this.orderStatusList) {
+        //         if (row.orderStatus == this.orderStatusList[i].value) {
+        //             return this.orderStatusList[i].name;
+        //         }
+        //     }
+        //     return row.orderStatus;
+        // },
         handleSizeChange(val) {
             this.pageSize = val;
             this.queryOrderListPage();
@@ -79,10 +92,43 @@ export default {
         },
         selsChange: function (sels) {
             this.sels = sels;
-        }
+        },
+        openRiskControl:function() {
+            if (!this.orderList) {
+                return false;
+            }
+            let bodyParam = [];
+            for (let j in this.orderList) {
+                let orderInfo = {};
+                orderInfo.orderId = this.orderList[j].orderId;
+                orderInfo.stockCode = this.orderList[j].stockCode;
+                orderInfo.buyPrice = this.orderList[j].buyPrice;
+                orderInfo.buyNumber = this.orderList[j].buyNumber;
+                bodyParam.push(orderInfo);
+            }
+            riskControl(bodyParam).then(res => {
+                if (res.code == ResponseEnum.SUCCESS.code) {
+                    for (let m in this.orderList) {
+                        let orderInfo = this.orderList[m];
+                        for (let n in res.obj) {
+                            if (orderInfo.orderId == res.obj[n].orderId) {
+                                orderInfo.currentPrice = res.obj[n].currentPrice;
+                                orderInfo.profit = res.obj[n].profit;
+                                break;
+                            }
+                        }
+                    }
+                }
+            })
+        },
+    },
+    beforeMount() {
+        this.$store.state.riskControlTimer = setInterval(() => {
+            this.openRiskControl();
+        }, 1000);
     },
     mounted() {
         this.queryOrderListPage();
-        this.getOrderStatusList();
+        // this.getOrderStatusList();
     }
 };

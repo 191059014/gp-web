@@ -44,7 +44,7 @@
                   </template>
                   <template v-for="child in item.children">
                     <template v-if="permissionSet && permissionSet.indexOf(child.meta.permissionValue)>-1">
-                      <el-menu-item :index="child.path" :key="child.path">{{child.name}}</el-menu-item>
+                      <el-menu-item :index="child.path" @click="clickMenu" :key="child.path">{{child.name}}</el-menu-item>
                     </template>
                   </template>
                 </el-submenu>

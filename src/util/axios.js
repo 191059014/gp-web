@@ -45,4 +45,4 @@ service.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-export default service
+export default service 

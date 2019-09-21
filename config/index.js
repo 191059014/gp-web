@@ -17,7 +17,14 @@ module.exports = {
         pathRewrite: {
           '^/api': ''   // 将前缀 '/api' 转为 '/'
         }
-      }
+      },
+      '/batchApi': {
+        target: 'http://localhost:8091/',  // 接口域名
+        changeOrigin: true,  //是否跨域
+        pathRewrite: {
+          '^/batchApi': ''   // 将前缀 '/batchApi' 转为 '/'
+        }
+      },
     },
 
     // Various Dev Server settings
