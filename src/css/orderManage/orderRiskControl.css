@@ -1,4 +1,9 @@
 .el-table .cell {
     white-space: pre-line
 }
-
+.redWord{
+    color: red;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-style: italic
+}

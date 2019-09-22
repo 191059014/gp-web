@@ -41,16 +41,12 @@ export default {
         formatServiceMoneyAndDelayMoney(row, column) {
             return row.serviceMoney + '\n' + row.delayMoney;
         },
-        formatCurrentPriceAndProfit(row, column) {
+        formatPrice(row, column) {
             let currentPrice = row.currentPrice;
             if (!currentPrice) {
                 currentPrice = 0
             }
-            let profit = row.profit;
-            if (!profit) {
-                profit = 0
-            }
-            return currentPrice + '\n' + profit;
+            return currentPrice;
         },
         // formatOrderStatus(row, column) {
         //     for (let i in this.orderStatusList) {
@@ -60,6 +56,11 @@ export default {
         //     }
         //     return row.orderStatus;
         // },
+        setCellStyle({ row, column, rowIndex, columnIndex }) {
+            if (columnIndex === 8 ||columnIndex === 9) {
+                return 'redWord';
+            }
+        },
         handleSizeChange(val) {
             this.pageSize = val;
             this.queryOrderListPage();
@@ -93,7 +94,7 @@ export default {
         selsChange: function (sels) {
             this.sels = sels;
         },
-        openRiskControl:function() {
+        openRiskControl: function () {
             if (!this.orderList) {
                 return false;
             }
@@ -125,7 +126,7 @@ export default {
     beforeMount() {
         this.$store.state.riskControlTimer = setInterval(() => {
             this.openRiskControl();
-        }, 1000);
+        }, 3000);
     },
     mounted() {
         this.queryOrderListPage();

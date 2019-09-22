@@ -16,7 +16,7 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="orderList" highlight-current-row v-loading="listLoading" style="width: 100%;">
+    <el-table :data="orderList" highlight-current-row v-loading="listLoading" :cell-class-name="setCellStyle" style="width: 100%;">
       <el-table-column prop="userName" label="客户姓名" style="width:5%">
         <el-table-column
           prop="mobile"
@@ -62,8 +62,8 @@
         <el-table-column prop="delayMoney" label="递延金" style="width:6%" :formatter="formatServiceMoneyAndDelayMoney"></el-table-column>
       </el-table-column>
       <el-table-column prop="buyTime" label="买入时间" style="width:5%"></el-table-column>
-      <el-table-column prop="currentPrice" label="当前价格" style="width:5%"></el-table-column>
-      <el-table-column prop="profit" label="浮动盈亏" style="width:5%"></el-table-column>
+      <el-table-column prop="currentPrice" label="当前价格" :formatter="formatPrice"></el-table-column>
+      <el-table-column prop="profit" label="浮动盈亏"></el-table-column>
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
