@@ -1,9 +1,14 @@
 .el-table .cell {
     white-space: pre-line
 }
-.redWord{
-    color: red;
+.floatEarnAndLoss {
     font-size: 1.5rem;
     font-weight: bold;
-    font-style: italic
+    font-style: italic;
+}
+.wordRed {
+    color: red;
+}
+.wordGreen {
+    color: green;
 }

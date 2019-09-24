@@ -29,9 +29,9 @@ export default {
         formatStockCodeAndStockName(row, column) {
             return row.stockCode + '\n' + row.stockName;
         },
-        formatBuyPriceAndBuyPriceTotal(row, column) {
-            return row.buyPrice + '\n' + row.buyPriceTotal;
-        },
+        // formatBuyPriceAndBuyPriceTotal(row, column) {
+        //     return row.buyPrice + '\n' + row.buyPriceTotal;
+        // },
         formatStrategyOwnMoneyAndStrategyMoney(row, column) {
             return row.strategyOwnMoney + '\n' + row.strategyMoney;
         },
@@ -57,9 +57,16 @@ export default {
         //     return row.orderStatus;
         // },
         setCellStyle({ row, column, rowIndex, columnIndex }) {
-            if (columnIndex === 8 ||columnIndex === 9) {
-                return 'redWord';
+            let style = "";
+            if (columnIndex === 8 || columnIndex === 9) {
+                if (row.currentPrice >= row.buyPrice) {
+                    style = 'wordRed';
+                } else {
+                    style = 'wordGreen';
+                }
+                style += " floatEarnAndLoss ";
             }
+            return style;
         },
         handleSizeChange(val) {
             this.pageSize = val;
@@ -114,7 +121,11 @@ export default {
                         for (let n in res.obj) {
                             if (orderInfo.orderId == res.obj[n].orderId) {
                                 orderInfo.currentPrice = res.obj[n].currentPrice;
-                                orderInfo.profit = res.obj[n].profit;
+                                let profit = res.obj[n].profit;
+                                if (profit >= 0) {
+                                    profit = "+" + profit;
+                                }
+                                orderInfo.profit = profit;
                                 break;
                             }
                         }

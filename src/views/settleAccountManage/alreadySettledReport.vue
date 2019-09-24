@@ -37,24 +37,24 @@
 
     <!--列表-->
     <el-table :data="orderList" highlight-current-row v-loading="listLoading" style="width: 100%;">
-      <el-table-column label="客户姓名" style="width:5%">
+      <el-table-column min-width="50px" label="客户姓名">
         <el-table-column
           label="手机号"
           style="width:6%"
           :formatter="formatUserNameAndMobile"
         ></el-table-column>
       </el-table-column>
-      <el-table-column label="股票代码" style="width:5%">
+      <el-table-column label="股票代码" min-width="50px">
         <el-table-column
           label="股票名称"
-          style="width:6%"
+          min-width="50px"
           :formatter="formatStockCodeAndStockName"
         ></el-table-column>
       </el-table-column>
       <el-table-column label="策略本金" style="width:5%">
         <el-table-column
           label="策略金额"
-          style="width:6%"
+          min-width="50px"
           :formatter="formatStrategyOwnMoneyAndStrategyMoney"
         ></el-table-column>
       </el-table-column>
@@ -65,25 +65,25 @@
           :formatter="formatBuyTimeAndSellTime"
         ></el-table-column>
       </el-table-column>
-      <el-table-column prop="order.buyNumber" label="买入股数" style="width:5%"></el-table-column>
+      <el-table-column prop="order.buyNumber" label="买入股数" min-width="50px"></el-table-column>
       <el-table-column label="买入价格" style="width:5%">
         <el-table-column
           label="卖出价格"
-          style="width:6%"
+          min-width="50px"
           :formatter="formatBuyBuyPriceAndSellPrice"
         ></el-table-column>
       </el-table-column>
       <el-table-column label="利润" style="width:5%">
         <el-table-column
           label="盈亏率"
-          style="width:6%"
+          min-width="50px"
           :formatter="formatProfitAndProfitRate"
         ></el-table-column>
       </el-table-column>
       <el-table-column label="止盈价格" style="width:5%">
         <el-table-column
           label="止损价格"
-          style="width:6%"
+          min-width="50px"
           :formatter="formatStopEarnMoneyAndStopLossMoney"
         ></el-table-column>
       </el-table-column>
@@ -101,6 +101,7 @@
           :formatter="formatAlreadyDelayDaysAndDelayEndTime"
         ></el-table-column>
       </el-table-column>
+      <el-table-column prop="order.netProfit" label="净利润" min-width="50px"></el-table-column>
     </el-table>
       
     <!--工具条-->
@@ -115,6 +116,12 @@
         style="float:right;"
       ></el-pagination>
     </el-col>
+
+    <div class="calcTotal">
+      <p class="text-right">合计策略本金：<span>{{strategyMoneyTotal}}</span></p>
+      <p class="text-right">合计服务费：<span>{{serviceMoneyTotal}}</span></p>
+    </div>
+    
   </section>
 </template>
 

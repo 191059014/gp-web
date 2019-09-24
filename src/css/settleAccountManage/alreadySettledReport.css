@@ -6,3 +6,12 @@
 .el-table .cell {
     white-space: pre-line
 }  
+.calcTotal {
+    clear: both;
+    padding: 5px 5px;
+    background-color: #F2F2F2;
+}
+.text-right {
+    text-align: right;
+    padding-right: 20px
+}

@@ -63,6 +63,17 @@ export const bindBankCard = bodyParam => { return service.post(`controller/agent
 // 余额提取
 export const balancesExtracted = extractedMoney => { return service.get(`controller/agent/balancesExtracted?extractedMoney=` + extractedMoney).then(res => res.data); };
 /**
+ * 热点资讯管理
+ */
+// 分页查询热点资讯
+export const getHotNewsListPage = (pageNum, pageSize, bodyParam) => { return service.post(`controller/hotNews/getHotNewsListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
+// 添加热点资讯
+export const addHotNews = params => { return service.post(`controller/hotNews/addHotNews`, params).then(res => res.data); };
+// 修改热点资讯
+export const updateHotNews = params => { return service.post(`controller/hotNews/updateHotNewsById`, params).then(res => res.data); };
+// 删除热点资讯
+export const deleteHotNewsById = id => { return service.get(`controller/hotNews/deleteById?id=` + id).then(res => res.data); };
+/**
  * 审核管理
  */
 // 支付状态下拉框

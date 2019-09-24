@@ -15,9 +15,10 @@ import orderRiskControl from '@/views/orderManage/orderRiskControl'
 import agentReport from '@/views/settleAccountManage/agentReport'
 import alreadySettledReport from '@/views/settleAccountManage/alreadySettledReport'
 import customerReport from '@/views/settleAccountManage/customerReport'
-import holdAPositionReport from '@/views/settleAccountManage/holdAPositionReport'
-import operationReport from '@/views/settleAccountManage/operationReport'
+// import holdAPositionReport from '@/views/settleAccountManage/holdAPositionReport'
+// import operationReport from '@/views/settleAccountManage/operationReport'
 import stockManage from '@/views/admin/stockManage'
+import hotNews from '@/views/admin/hotNews'
 
 Vue.use(Router)
 
@@ -94,6 +95,20 @@ export const constantRouterMap = [
             { permissionName: '新增', sourceType: '2', permissionValue: 'sys:stock:add' },
             { permissionName: '修改', sourceType: '2', permissionValue: 'sys:stock:update' },
             { permissionName: '删除', sourceType: '2', permissionValue: 'sys:stock:delete' }
+          ]
+        }
+      },
+      {
+        path: '/hotNews',
+        component: hotNews,
+        name: '热点资讯管理',
+        meta: {
+          sourceType: '1',
+          permissionValue: 'sys:hotNews',
+          operators: [
+            { permissionName: '新增', sourceType: '2', permissionValue: 'sys:hotNews:add' },
+            { permissionName: '修改', sourceType: '2', permissionValue: 'sys:hotNews:update' },
+            { permissionName: '删除', sourceType: '2', permissionValue: 'sys:hotNews:delete' }
           ]
         }
       }
@@ -257,15 +272,15 @@ export const constantRouterMap = [
           permissionValue: 'settle:customerReport'
         }
       },
-      {
-        path: '/holdAPositionReport',
-        component: holdAPositionReport,
-        name: '持仓报表',
-        meta: {
-          sourceType: '1',
-          permissionValue: 'settle:holdAPositionReport'
-        }
-      },
+      // {
+      //   path: '/holdAPositionReport',
+      //   component: holdAPositionReport,
+      //   name: '持仓报表',
+      //   meta: {
+      //     sourceType: '1',
+      //     permissionValue: 'settle:holdAPositionReport'
+      //   }
+      // },
       {
         path: '/alreadySettledReport',
         component: alreadySettledReport,
@@ -274,16 +289,16 @@ export const constantRouterMap = [
           sourceType: '1',
           permissionValue: 'settle:alreadySettledReport'
         }
-      },
-      {
-        path: '/operationReport',
-        component: operationReport,
-        name: '运营报表',
-        meta: {
-          sourceType: '1',
-          permissionValue: 'settle:operationReport'
-        }
       }
+      // {
+      //   path: '/operationReport',
+      //   component: operationReport,
+      //   name: '运营报表',
+      //   meta: {
+      //     sourceType: '1',
+      //     permissionValue: 'settle:operationReport'
+      //   }
+      // }
     ]
   }
 ]

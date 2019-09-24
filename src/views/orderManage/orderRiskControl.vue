@@ -33,15 +33,6 @@
           :formatter="formatStockCodeAndStockName"
         ></el-table-column>
       </el-table-column>
-      <el-table-column prop="buyNumber" label="买入股数" style="width:5%"></el-table-column>
-      <el-table-column prop="buyPrice" label="买入价格" style="width:6%">
-        <el-table-column
-          prop="buyPriceTotal"
-          label="买入总金额"
-          style="width:6%"
-          :formatter="formatBuyPriceAndBuyPriceTotal"
-        ></el-table-column>
-      </el-table-column>
       <el-table-column prop="strategyOwnMoney" label="策略本金" style="width:5%">
         <el-table-column
           prop="strategyMoney"
@@ -62,6 +53,8 @@
         <el-table-column prop="delayMoney" label="递延金" style="width:6%" :formatter="formatServiceMoneyAndDelayMoney"></el-table-column>
       </el-table-column>
       <el-table-column prop="buyTime" label="买入时间" style="width:5%"></el-table-column>
+      <el-table-column prop="buyNumber" label="买入股数" style="width:5%"></el-table-column>
+      <el-table-column prop="buyPrice" label="买入价格" style="width:6%"></el-table-column>
       <el-table-column prop="currentPrice" label="当前价格" :formatter="formatPrice"></el-table-column>
       <el-table-column prop="profit" label="浮动盈亏"></el-table-column>
     </el-table>

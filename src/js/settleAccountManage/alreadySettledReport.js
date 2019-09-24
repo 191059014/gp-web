@@ -43,6 +43,26 @@ export default {
             sels: [], //列表选中列
         };
     },
+    computed: {
+        strategyMoneyTotal: function () {
+            let result = 0;
+            if (this.orderList.length > 0) {
+                for (let i in this.orderList) {
+                    result += this.orderList[i].order.strategyMoney;
+                }
+            }
+            return result + "元";
+        },
+        serviceMoneyTotal: function () {
+            let result = 0;
+            if (this.orderList.length > 0) {
+                for (let i in this.orderList) {
+                    result += this.orderList[i].order.serviceMoney;
+                }
+            }
+            return result + "元";
+        }
+    },
     methods: {
         formatUserNameAndMobile(row, column) {
             return row.user.userName + '\n' + row.user.mobile;
