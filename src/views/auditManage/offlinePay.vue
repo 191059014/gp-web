@@ -88,7 +88,7 @@
 
     <!--编辑界面-->
     <el-dialog title="修改" :visible.sync="editFormVisible">
-      <el-form :model="editForm" :rules="editFormRules" ref="editForm">
+      <el-form :model="editForm" ref="editForm">
         <el-form-item label="审核ID" :label-width="editFormLabelWidth" style="display:none;">
           <el-input v-model="editForm.checkId" autocomplete="off"></el-input>
         </el-form-item>
@@ -102,7 +102,10 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="管理员备注" :label-width="editFormLabelWidth">
+        <el-form-item v-show="unit!=''" label="备注" :label-width="editFormLabelWidth">
+          <el-input v-model="editForm.remark" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item v-show="unit==''" label="管理员备注" :label-width="editFormLabelWidth">
           <el-input v-model="editForm.systemRemark" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>

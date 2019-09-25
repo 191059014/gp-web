@@ -33,7 +33,9 @@ export default {
             filters: {
                 userName: "",
                 mobile: '',
-                createTimeRange: ''
+                createTimeRange: '',
+                inviterMobile: '',
+                unit: ''
             },
             orderList: [],
             total: 0,
@@ -105,15 +107,17 @@ export default {
             let pageSize = 0;
             if (type == 0) {
                 // 导出当前页
-                bodyParam = {
-                    userName: this.filters.userName,
-                    mobile: this.filters.mobile,
-                    orderTimeStart: this.filters.createTimeRange[0],
-                    orderTimeEnd: this.filters.createTimeRange[1]
-                };
                 pageNum = this.pageNum;
                 pageSize = this.pageSize;
             }
+            bodyParam = {
+                userName: this.filters.userName,
+                mobile: this.filters.mobile,
+                orderTimeStart: this.filters.createTimeRange[0],
+                orderTimeEnd: this.filters.createTimeRange[1],
+                inviterMobile: this.filters.inviterMobile,
+                unit: this.filters.unit
+            };
             let url = 'controller/alreadySettledReport/exportAlreadySettledReport?pageNum=' + pageNum + '&pageSize=' + pageSize;
             exportExcel(url, bodyParam, '持仓中报表');
         },
@@ -123,7 +127,9 @@ export default {
                 userName: this.filters.userName,
                 mobile: this.filters.mobile,
                 orderTimeStart: this.filters.createTimeRange[0],
-                orderTimeEnd: this.filters.createTimeRange[1]
+                orderTimeEnd: this.filters.createTimeRange[1],
+                inviterMobile: this.filters.inviterMobile,
+                unit: this.filters.unit
             };
             this.listLoading = true;
             findAlreadySettledReportPages(this.pageNum, this.pageSize, bodyParam).then((res) => {
@@ -141,7 +147,9 @@ export default {
             this.filters = {
                 userName: "",
                 mobile: "",
-                createTimeRange: ''
+                createTimeRange: '',
+                unit: '',
+                inviterMobile:''
             }
         },
         selsChange: function (sels) {

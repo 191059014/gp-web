@@ -4,10 +4,16 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.userName" placeholder="客户姓名"></el-input>
+          <el-input v-model="filters.userName" style="width:150px" placeholder="客户姓名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="filters.mobile" placeholder="手机号"></el-input>
+          <el-input v-model="filters.mobile" style="width:150px" placeholder="客户手机号"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="filters.unit" style="width:150px" placeholder="代理商编号"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="filters.inviterMobile" style="width:150px" placeholder="业务员手机号"></el-input>
         </el-form-item>
         <el-form-item label="时间">
           <el-date-picker

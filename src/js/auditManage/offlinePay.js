@@ -2,6 +2,7 @@ import { getOfflinePayStatusCombobox, getOfflineCheckStatusCombobox, getOfflineP
 export default {
     data() {
         return {
+            unit: this.$store.state.unit,
             filters: {
                 payStatus: "",
                 payChannel: ""
@@ -18,15 +19,12 @@ export default {
             editFormVisible: false, //编辑界面是否显示
             editLoading: false,
             editFormLabelWidth: '120px',
-            editFormRules: {
-                checkStatus: [{ required: true, message: "请审核", trigger: "blur" }],
-                systemRemark: [{ required: true, message: "请输入备注", trigger: "blur" }]
-            },
             //编辑界面数据
             editForm: {
                 checkId: "",
                 checkStatus: "",
-                systemRemark: ""
+                systemRemark: "",
+                remark: ""
             },
         }
     },
