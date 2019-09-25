@@ -10,6 +10,7 @@
     clear: both;
     padding: 5px 5px;
     background-color: #F2F2F2;
+    border-radius: 10px
 }
 .text-right {
     text-align: right;
