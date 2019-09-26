@@ -34,7 +34,11 @@ export default {
               if (code == ResponseEnum.LOGIN_SUCCESS.code) {
                 // 将登陆信息放入缓存
                 sessionStorage.setItem(CURRENT_USER_SESSION_KEY, JSON.stringify(data.obj));
-                this.$store.state.unit=data.obj.unit,
+                if (data.obj.unit) {
+                  console.log('unit='+this.$store.state.unit);
+                  this.$store.state.unit = data.obj.unit;
+                  console.log('unit='+this.$store.state.unit);
+                }
                 // 获取当前用户的权限
                 getPermissionSet().then(res => {
                   if (res.code == ResponseEnum.SUCCESS.code) {

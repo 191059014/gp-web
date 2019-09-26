@@ -63,7 +63,6 @@
       <el-table-column label="操作" style="width:20%">
         <template slot-scope="scope">
           <el-button
-            v-if="!scope.row.unit"
             size="small"
             :type="scope.row.checkStatus==1?'danger':'success'"
             :disabled="scope.row.checkStatus==1?false:true"
@@ -92,7 +91,7 @@
         <el-form-item label="审核ID" :label-width="editFormLabelWidth" style="display:none;">
           <el-input v-model="editForm.checkId" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="审核" :label-width="editFormLabelWidth">
+        <el-form-item v-show="!unit" label="审核" :label-width="editFormLabelWidth">
           <el-select v-model="editForm.checkStatus" placeholder="请审核">
             <el-option
               v-for="item in checkStatusList"
@@ -102,10 +101,10 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-show="unit!=''" label="备注" :label-width="editFormLabelWidth">
+        <el-form-item v-show="unit" label="备注" :label-width="editFormLabelWidth">
           <el-input v-model="editForm.remark" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item v-show="unit==''" label="管理员备注" :label-width="editFormLabelWidth">
+        <el-form-item v-show="!unit" label="管理员备注" :label-width="editFormLabelWidth">
           <el-input v-model="editForm.systemRemark" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>

@@ -147,6 +147,12 @@ export default {
         this.getOfflinePayChannelCombobox();
         this.getFundTypeCombobox();
         this.queryList();
+        console.log('unit='+this.unit);
+        if(this.unit){
+            console.log(true);
+        }else{
+            console.log(false);
+        }
     }
 
 }
