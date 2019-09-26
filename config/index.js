@@ -12,14 +12,14 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:9000/',  // 接口域名
+        target: 'http://localhost:8090/',  // 接口域名
         changeOrigin: true,  //是否跨域
         pathRewrite: {
           '^/api': ''   // 将前缀 '/api' 转为 '/'
         }
       },
       '/batchApi': {
-        target: 'http://121.40.94.96:8091/',  // 接口域名
+        target: 'http://localhost:8091/',  // 接口域名
         changeOrigin: true,  //是否跨域
         pathRewrite: {
           '^/batchApi': ''   // 将前缀 '/batchApi' 转为 '/'
@@ -29,7 +29,7 @@ module.exports = {
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
-    port: 90, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 80, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
