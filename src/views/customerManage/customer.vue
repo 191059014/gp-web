@@ -32,8 +32,6 @@
       ></el-table-column>
       <el-table-column prop="mobile" label="手机号" style="width:6%"></el-table-column>
       <el-table-column prop="inviterMobile" label="邀请人手机号" style="width:6%"></el-table-column>
-      <el-table-column prop="riskLevel" label="风险评测等级" style="width:5%"></el-table-column>
-      <el-table-column prop="riskScore" label="风险评测得分" style="width:5%"></el-table-column>
       <el-table-column prop="createTime" label="创建时间" style="width:13%"></el-table-column>
     </el-table>
 
