@@ -48,7 +48,7 @@ export default {
     computed: {
         strategyMoneyTotal: function () {
             let result = 0;
-            if (this.orderList.length > 0) {
+            if (this.orderList && this.orderList.length > 0) {
                 for (let i in this.orderList) {
                     result += this.orderList[i].order.strategyMoney;
                 }
@@ -57,7 +57,7 @@ export default {
         },
         serviceMoneyTotal: function () {
             let result = 0;
-            if (this.orderList.length > 0) {
+            if (this.orderList && this.orderList.length > 0) {
                 for (let i in this.orderList) {
                     result += this.orderList[i].order.serviceMoney;
                 }
