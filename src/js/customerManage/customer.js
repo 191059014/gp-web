@@ -32,11 +32,11 @@ export default {
         },
         handleSizeChange(val) {
             this.pageSize = val;
-            this.queryAgentListPage();
+            this.queryUserListPage();
         },
         handleCurrentChange(val) {
             this.pageNum = val;
-            this.queryAgentListPage();
+            this.queryUserListPage();
         },
         //获取用户列表
         queryUserListPage() {
