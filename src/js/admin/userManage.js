@@ -1,4 +1,11 @@
-import { getAgentListPage, addAgent, updateAgent, deleteAgentById, findRoleTree, batchInsertAgentRole } from '../../api/system';
+import {
+  getAgentListPage,
+  addAgent,
+  updateAgent,
+  deleteAgentById,
+  findRoleTree,
+  batchInsertAgentRole, getAgentLevelCombobox
+} from '../../api/system';
 
 export default {
   data() {
@@ -18,9 +25,9 @@ export default {
       editLoading: false,
       editFormLabelWidth: '120px',
       editFormRules: {
-        agentName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        mobile: [{ required: true, message: "请输入手机号", trigger: "blur" }]
+        agentName: [{required: true, message: "请输入用户名", trigger: "blur"}],
+        password: [{required: true, message: "请输入密码", trigger: "blur"}],
+        mobile: [{required: true, message: "请输入手机号", trigger: "blur"}]
       },
       //编辑界面数据
       editForm: {
@@ -33,9 +40,9 @@ export default {
       addLoading: false,
       addFormLabelWidth: '120px',
       addFormRules: {
-        agentName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        confirmPassword: [{ required: true, message: "请输入确认密码", trigger: "blur" }]
+        agentName: [{required: true, message: "请输入用户名", trigger: "blur"}],
+        password: [{required: true, message: "请输入密码", trigger: "blur"}],
+        confirmPassword: [{required: true, message: "请输入确认密码", trigger: "blur"}]
       },
       //新增界面数据
       addForm: {
@@ -43,17 +50,31 @@ export default {
         password: "",
         confirmPassword: "",
         mobile: "",
-        unit: null
+        key: ""
       },
       roleTree: [],
       defaultCheckedKeys: [],
       editRoleVisible: false,
       editRoleLoading: false,
       currentAgentId: "",
-      initStatus: false
+      initStatus: false,
+      agentLevelList: []
     };
   },
   methods: {
+    getAgentLevelList() {
+      getAgentLevelCombobox().then(res => {
+        this.agentLevelList = res.obj;
+      })
+    },
+    formatAgentLevel(row, column) {
+      for (let i in this.agentLevelList) {
+        if (row.agentLevel == this.agentLevelList[i].value) {
+          return this.agentLevelList[i].name;
+        }
+      }
+      return row.agentLevel;
+    },
     handleSizeChange(val) {
       this.pageSize = val;
       this.queryAgentListPage();
@@ -75,7 +96,7 @@ export default {
           this.agentList = res.obj;
           this.listLoading = false;
         } else {
-          this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+          this.$message({message: ResponseEnum.ERROR.msg, type: 'error'});
         }
       }).catch(err => {
       });
@@ -97,15 +118,15 @@ export default {
           deleteAgentById(agentId).then((res) => {
             if (res.code == ResponseEnum.SUCCESS.code) {
               this.listLoading = false;
-              this.$message({ message: '删除成功', type: 'success' });
+              this.$message({message: '删除成功', type: 'success'});
               this.queryAgentListPage();
             } else {
-              this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+              this.$message({message: ResponseEnum.ERROR.msg, type: 'error'});
             }
           });
         }).catch(err => {
-          this.listLoading = false;
-        });
+        this.listLoading = false;
+      });
     },
     //显示编辑界面
     handleEdit: function (index, row) {
@@ -120,7 +141,7 @@ export default {
         password: "",
         confirmPassword: "",
         mobile: "",
-        unit: null
+        unit: ""
       }
     },
     //编辑
@@ -132,12 +153,12 @@ export default {
           updateAgent(bodyParam).then((res) => {
             if (res.code == ResponseEnum.SUCCESS.code) {
               this.editLoading = false;
-              this.$message({ message: '修改成功', type: 'success' });
+              this.$message({message: '修改成功', type: 'success'});
               this.$refs['editForm'].resetFields();
               this.editFormVisible = false;
               this.queryAgentListPage();
             } else {
-              this.$message({ message: ResponseEnum.ERROR.msg, type: 'error' });
+              this.$message({message: ResponseEnum.ERROR.msg, type: 'error'});
             }
           }).catch(err => {
             this.editLoading = false;
@@ -154,34 +175,40 @@ export default {
     addSubmit: function () {
       this.$refs.addForm.validate(valid => {
         if (valid) {
-          this.addLoading = true;
           let bodyParam = Object.assign({}, this.addForm);
           if (!bodyParam.agentName) {
-            this.$message({ message: '请输入代理商姓名', type: 'error' });
+            this.$message({message: '请输入代理商姓名', type: 'error'});
             return false;
           }
           if (!bodyParam.password) {
-            this.$message({ message: '请输入密码', type: 'error' });
+            this.$message({message: '请输入密码', type: 'error'});
             return false;
           }
           if (!bodyParam.confirmPassword) {
-            this.$message({ message: '请输入确认密码', type: 'error' });
+            this.$message({message: '请输入确认密码', type: 'error'});
             return false;
           }
           if (bodyParam.password != bodyParam.confirmPassword) {
-            this.$message({ message: '两次密码输入不一致', type: 'error' });
+            this.$message({message: '两次密码输入不一致', type: 'error'});
+            return false;
+          }
+          if (!bodyParam.key) {
+            this.$message({message: '请输入口令', type: 'error'});
             return false;
           }
           delete bodyParam.confirmPassword;
-          addAgent(bodyParam).then((res) => {
+          let key = bodyParam.key;
+          delete bodyParam.key;
+          this.addLoading = true;
+          addAgent(bodyParam, key).then((res) => {
             if (res.code == ResponseEnum.SUCCESS.code) {
               this.addLoading = false;
-              this.$message({ message: '添加成功', type: 'success' });
+              this.$message({message: '添加成功', type: 'success'});
               this.$refs['addForm'].resetFields();
               this.addFormVisible = false;
               this.queryAgentListPage();
             } else {
-              this.$message({ message: res.msg, type: 'error' });
+              this.$message({message: res.msg, type: 'error'});
               this.addLoading = false;
             }
           }).catch(err => {
@@ -197,9 +224,11 @@ export default {
     //批量删除
     batchRemove: function () {
       var ids = this.sels.map(item => item.id).toString();
-      this.$confirm("确认删除选中记录吗？", "提示", { type: "warning" })
-        .then(() => { })
-        .catch(() => { });
+      this.$confirm("确认删除选中记录吗？", "提示", {type: "warning"})
+        .then(() => {
+        })
+        .catch(() => {
+        });
     },
     editRole: function (index, row) {
       if (row.roleIdSet && row.roleIdSet.length > 0) {
@@ -224,11 +253,11 @@ export default {
       let roleIdArr = this.$refs.tree.getCheckedKeys();
       batchInsertAgentRole(roleIdArr, this.currentAgentId).then(res => {
         if (res.code == ResponseEnum.SUCCESS.code) {
-          this.$message({ message: '修改成功', type: 'success' });
+          this.$message({message: '修改成功', type: 'success'});
           this.editRoleVisible = false;
           this.queryAgentListPage();
         } else {
-          this.$message({ message: res.msg, type: 'error' });
+          this.$message({message: res.msg, type: 'error'});
         }
       })
     },
@@ -239,6 +268,7 @@ export default {
     }
   },
   mounted() {
+    this.getAgentLevelList();
     this.queryAgentListPage();
     this.loadRoleTree();
   }

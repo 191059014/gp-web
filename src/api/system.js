@@ -13,7 +13,7 @@ export const getPermissionSet = () => { return service.get(`controller/login/get
 // 分页获取代理商列表
 export const getAgentListPage = (pageNum, pageSize, bodyParam) => { return service.post(`controller/agent/getAgentListPage?pageNum=` + pageNum + '&pageSize=' + pageSize, bodyParam).then(res => res.data); };
 // 添加代理商
-export const addAgent = params => { return service.post(`controller/agent/addAgent`, params).then(res => res.data); };
+export const addAgent = (params,key) => { return service.post(`controller/agent/addAgent?key=`+key, params).then(res => res.data); };
 // 修改代理商
 export const updateAgent = params => { return service.post(`controller/agent/updateAgent`, params).then(res => res.data); };
 // 删除代理商
