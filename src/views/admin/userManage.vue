@@ -29,12 +29,17 @@
       @selection-change="selsChange"
       style="width: 100%;"
     >
-      <el-table-column prop="agentName" label="姓名" :span="2" sortable></el-table-column>
-      <el-table-column prop="mobile" label="手机号" :span="2" sortable></el-table-column>
-      <el-table-column prop="unit" label="代理商编制" :span="2" sortable></el-table-column>
-      <el-table-column prop="createTime" label="创建时间" :span="2" sortable></el-table-column>
-      <el-table-column prop="updateTime" label="更新时间" :span="2" sortable></el-table-column>
-      <el-table-column label="操作" :span="2">
+      <el-table-column prop="agentName" label="姓名" sortable></el-table-column>
+      <el-table-column prop="mobile" label="手机号" sortable></el-table-column>
+      <el-table-column prop="unit" label="代理商编制" sortable></el-table-column>
+      <el-table-column
+              prop="agentLevel"
+              label="代理商等级"
+              :formatter="formatAgentLevel"
+            ></el-table-column>
+      <el-table-column prop="createTime" label="创建时间" sortable></el-table-column>
+      <el-table-column prop="updateTime" label="更新时间" sortable></el-table-column>
+      <el-table-column label="操作" min-width="150px">
         <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
@@ -91,8 +96,8 @@
         <el-form-item label="手机号" :label-width="addFormLabelWidth">
           <el-input v-model="addForm.mobile" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="代理商编号" :label-width="addFormLabelWidth">
-          <el-input v-model="addForm.unit" @input="checkNumber(addForm.unit)" autocomplete="off" placeholder="如果新增二级代理商，则需填写"></el-input>
+        <el-form-item label="口令" :label-width="addFormLabelWidth">
+          <el-input v-model="addForm.key" autocomplete="off" placeholder="如果新增二级代理商，则需填写"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
