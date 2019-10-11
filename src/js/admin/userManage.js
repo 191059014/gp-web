@@ -141,7 +141,7 @@ export default {
         password: "",
         confirmPassword: "",
         mobile: "",
-        unit: ""
+        key: ""
       }
     },
     //编辑
@@ -166,10 +166,6 @@ export default {
           });
         }
       });
-    },
-    checkNumber: function (unit) {
-      let unitArr = unit.match(/^[1-9]\d*$/) || null;
-      this.addForm.unit = unitArr & unitArr[0] | null;
     },
     //新增
     addSubmit: function () {
